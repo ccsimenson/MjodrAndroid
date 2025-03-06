@@ -48,21 +48,11 @@ fun NavGraph(navController: NavHostController) {
         }
         
         composable(Screen.Recipes.route) {
-            // Placeholder for RecipesScreen
-            // Will implement the Ancient Recipes screen later
-            TemporaryScreen(
-                title = "Ancient Recipes",
-                onNavigateBack = { navController.popBackStack() }
-            )
+            RecipesScreen(onNavigateBack = { navController.popBackStack() })
         }
         
         composable(Screen.MeadHall.route) {
-            // Placeholder for MeadHallScreen
-            // Will implement the Mead Hall screen later
-            TemporaryScreen(
-                title = "Mead Hall",
-                onNavigateBack = { navController.popBackStack() }
-            )
+            MeadHallScreen(onNavigateBack = { navController.popBackStack() })
         }
         
         composable(Screen.Help.route) {

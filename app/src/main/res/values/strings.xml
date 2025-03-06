@@ -25,4 +25,12 @@
     <string name="og_example">1.055</string>
     <string name="fg_example">1.015</string>
     <string name="temp_example">60</string>
+    
+    <!-- Ancient Recipes Screen -->
+    <string name="search_recipes">Search for Ancient Wisdom</string>
+    <string name="search_hint">Search for mead recipes</string>
+    <string name="load_more">Load More Ancient Wisdom</string>
+    <string name="no_recipes">No ancient recipes found. Try another search.</string>
+    <string name="try_again">Try Again</string>
+    <string name="default_search">traditional viking mead</string>
 </resources>
