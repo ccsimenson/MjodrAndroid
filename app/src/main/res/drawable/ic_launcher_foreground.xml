@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Viking horn icon in soft gold -->
+    <path
+        android:fillColor="#DAA520"
+        android:pathData="M54,30 C45,30 37.5,37.5 37.5,46.5 C37.5,55.5 45,63 54,63 C63,63 70.5,55.5 70.5,46.5 C70.5,37.5 63,30 54,30 Z M54,60 C46.5,60 40.5,54 40.5,46.5 C40.5,39 46.5,33 54,33 C61.5,33 67.5,39 67.5,46.5 C67.5,54 61.5,60 54,60 Z"/>
+    <!-- Horn details -->
+    <path
+        android:fillColor="#B08968"
+        android:pathData="M54,36 C48,36 43.5,40.5 43.5,46.5 C43.5,52.5 48,57 54,57 C60,57 64.5,52.5 64.5,46.5 C64.5,40.5 60,36 54,36 Z"/>
+</vector>

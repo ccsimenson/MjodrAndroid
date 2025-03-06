@@ -3,13 +3,8 @@ package com.ccsimenson.mjodr
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,8 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.ccsimenson.mjodr.navigation.NavGraph
 import com.ccsimenson.mjodr.ui.theme.MjodrTheme
-import com.ccsimenson.mjodr.ui.theme.VikingButton
 import com.ccsimenson.mjodr.ui.theme.VikingColors
+import com.ccsimenson.mjodr.ui.theme.VikingButton
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,17 +54,15 @@ fun MainScreen(
             color = VikingColors.Gold
         )
 
-        // Subtitle
-        Text(
-            text = "Viking Mead Making Assistant",
-            style = MaterialTheme.typography.titleLarge,
-            color = VikingColors.Gold
-        )
+        Spacer(modifier = Modifier.height(32.dp))
 
-        // Navigation Buttons
+        // Main feature buttons with Viking styling
         Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier
+                .width(400.dp)  // Main window size from memory
+                .heightIn(max = 300.dp)  // Main window size from memory
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             VikingButton(
                 text = stringResource(R.string.sacred_measurements),
@@ -87,7 +80,7 @@ fun MainScreen(
             )
 
             VikingButton(
-                text = stringResource(R.string.runes_of_knowledge),
+                text = stringResource(R.string.wisdom_of_odin),
                 onClick = onNavigateToHelp
             )
         }
