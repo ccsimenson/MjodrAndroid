@@ -3,15 +3,15 @@ package com.ccsimenson.mjodr.ui.theme
 import androidx.compose.ui.graphics.Color
 
 object VikingColors {
-    // Primary Colors
+    // Primary Colors from Viking theme memory
     val DarkWood = Color(0xFF2C1810)  // Dark brown background
     val LightWood = Color(0xFFB08968)  // Light brown for buttons
     val Gold = Color(0xFFDAA520)       // Soft gold for accents
-    val DeepRed = Color(0xFF8B0000)    // Deep red for active states
-    val Parchment = Color(0xFFF5E6D3)  // Warm cream for text fields
-    val TextDark = Color(0xFF2C1810)   // Dark text on light backgrounds
+    val DeepRed = Color(0xFF8B0000)    // Deep red for hover/active states
+    val Parchment = Color(0xFFF5E6D3)  // Parchment for text on dark backgrounds
+    val TextDark = Color(0xFF2C1810)   // Dark brown text on light backgrounds
 
-    // Alpha Variations
+    // Alpha Variations for UI effects
     val LightWoodAlpha70 = Color(0xB3B08968)  // For semi-transparent overlays
     val GoldAlpha50 = Color(0x80DAA520)       // For subtle highlights
     val ParchmentAlpha90 = Color(0xE6F5E6D3)  // For text field backgrounds
@@ -23,6 +23,6 @@ object VikingColors {
     
     // Semantic Colors
     val Success = Color(0xFF2E7D32)           // Green for success states
-    val Error = DeepRed                        // Red for error states
-    val Warning = Gold                         // Gold for warning states
+    val Error = DeepRed                       // Red for error states
+    val Warning = Gold                        // Gold for warning states
 }
