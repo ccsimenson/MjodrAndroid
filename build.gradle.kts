@@ -9,25 +9,12 @@ buildscript {
         google()
         mavenCentral()
     }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.1.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
     }
 }
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
-}
-
-// Set project-wide properties
-extra.apply {
-    set("compose_version", "1.5.1")
-    set("kotlin_version", "1.9.0")
-    set("nav_version", "2.7.5")
-    set("compileSdk", 34)
-    set("minSdk", 24)
-    set("targetSdk", 34)
 }
