@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Mjöðr</string>
+    <!-- App name -->
+    <string name="app_name">Mjöðr Calculator</string>
+
+    <!-- Main menu items -->
     <string name="sacred_measurements">Sacred Measurements</string>
-    <string name="wisdom_of_odin">Wisdom of Odin</string>
     <string name="ancient_recipes">Ancient Recipes</string>
     <string name="mead_hall">Mead Hall</string>
-    <string name="runes_of_knowledge">Runes of Knowledge</string>
-    <string name="enter_original_gravity">Enter Original Gravity</string>
-    <string name="enter_final_gravity">Enter Final Gravity</string>
-    <string name="enter_temperature">Enter Temperature (°F)</string>
+    <string name="wisdom_of_odin">Wisdom of Odin</string>
+
+    <!-- Calculator labels -->
+    <string name="original_gravity">Original Gravity</string>
+    <string name="final_gravity">Final Gravity</string>
+    <string name="temperature">Temperature (°F)</string>
     <string name="calculate">Calculate</string>
-    <string name="abv_result">ABV: %1$.2f%%</string>
-    <string name="plato_result">°Plato: %1$.2f</string>
+    <string name="back">Return to Great Hall</string>
+
+    <!-- Results -->
+    <string name="abv_result">Strength: %.2f%% ABV</string>
+    <string name="plato_result">%.1f° Plato</string>
+
+    <!-- Example values -->
+    <string name="og_example">1.055</string>
+    <string name="fg_example">1.015</string>
+    <string name="temp_example">60</string>
 </resources>
