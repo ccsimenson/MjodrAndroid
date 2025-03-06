@@ -1,20 +1,32 @@
 # Gradle files
 .gradle/
+.gradle
 build/
+/build
 
 # Local configuration file (sdk path, etc)
 local.properties
+/local.properties
 
 # Android Studio generated files and folders
 captures/
+/captures
 .externalNativeBuild/
+.externalNativeBuild
 .cxx/
+.cxx
 *.apk
 output.json
 
 # IntelliJ
 *.iml
 .idea/
+.idea/caches
+.idea/libraries
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
 misc.xml
 deploymentTargetDropDown.xml
 render.experimental.xml
@@ -29,6 +41,16 @@ google-services.json
 # Android Profiling
 *.hprof
 
+# Crash logs
+hs_err_pid*
+
+# Unused files
+app/src/main/java/com/ccsimenson/mjodr/ui/screens/CalculatorScreen.kt
+app/src/main/res/values/font_certs.xml
+
 # Gradle wrapper
 !gradle/wrapper/gradle-wrapper.jar
 !gradle/wrapper/gradle-wrapper.properties
+
+# Other
+.DS_Store
