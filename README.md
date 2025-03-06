@@ -15,7 +15,7 @@ A Viking-themed mead brewing calculator and recipe management app for Android. C
    - Android Studio Hedgehog or later
    - JDK 17
    - Android SDK 34
-   - Gradle 8.2
+   - Gradle 8.5
 
 2. Build & Run:
    ```bash
