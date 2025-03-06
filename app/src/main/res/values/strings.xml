@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mjöðr</string>
+    <string name="sacred_measurements">Sacred Measurements</string>
+    <string name="wisdom_of_odin">Wisdom of Odin</string>
+    <string name="ancient_recipes">Ancient Recipes</string>
+    <string name="mead_hall">Mead Hall</string>
+    <string name="runes_of_knowledge">Runes of Knowledge</string>
+    <string name="enter_original_gravity">Enter Original Gravity</string>
+    <string name="enter_final_gravity">Enter Final Gravity</string>
+    <string name="enter_temperature">Enter Temperature (°F)</string>
+    <string name="calculate">Calculate</string>
+    <string name="abv_result">ABV: %1$.2f%%</string>
+    <string name="plato_result">°Plato: %1$.2f</string>
+</resources>
