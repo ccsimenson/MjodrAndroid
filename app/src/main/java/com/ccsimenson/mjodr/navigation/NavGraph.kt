@@ -1,9 +1,24 @@
 package com.ccsimenson.mjodr.navigation
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.ccsimenson.mjodr.ui.components.VikingButton
+import com.ccsimenson.mjodr.ui.screens.*
+import com.ccsimenson.mjodr.ui.theme.VikingColors
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
@@ -23,29 +38,69 @@ fun NavGraph(navController: NavHostController) {
             MainScreen(
                 onNavigateToCalculator = { navController.navigate(Screen.StrengthCalculator.route) },
                 onNavigateToRecipes = { navController.navigate(Screen.Recipes.route) },
-                onNavigateToMeadHall = { navController.navigate(Screen.MeadHall.route) },
+                onNavigateToBatchManagement = { navController.navigate(Screen.MeadHall.route) },
                 onNavigateToHelp = { navController.navigate(Screen.Help.route) }
             )
         }
         
         composable(Screen.StrengthCalculator.route) {
-            // Will implement later
             StrengthCalculatorScreen(onNavigateBack = { navController.popBackStack() })
         }
         
         composable(Screen.Recipes.route) {
-            // Will implement later
-            RecipesScreen(onNavigateBack = { navController.popBackStack() })
+            // Placeholder for RecipesScreen
+            // Will implement the Ancient Recipes screen later
+            TemporaryScreen(
+                title = "Ancient Recipes",
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         
         composable(Screen.MeadHall.route) {
-            // Will implement later
-            MeadHallScreen(onNavigateBack = { navController.popBackStack() })
+            // Placeholder for MeadHallScreen
+            // Will implement the Mead Hall screen later
+            TemporaryScreen(
+                title = "Mead Hall",
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         
         composable(Screen.Help.route) {
-            // Will implement later
-            HelpScreen(onNavigateBack = { navController.popBackStack() })
+            // Placeholder for HelpScreen
+            // Will implement the Wisdom of Odin screen later
+            TemporaryScreen(
+                title = "Wisdom of Odin",
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+    }
+}
+
+@Composable
+fun TemporaryScreen(title: String, onNavigateBack: () -> Unit) {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = VikingColors.DarkWood
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.displayLarge,
+                color = VikingColors.Gold
+            )
+            
+            Spacer(modifier = Modifier.height(32.dp))
+            
+            VikingButton(
+                text = "Return to Mead Hall",
+                onClick = onNavigateBack
+            )
         }
     }
 }

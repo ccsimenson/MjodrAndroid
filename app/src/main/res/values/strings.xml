@@ -8,17 +8,18 @@
     <string name="ancient_recipes">Ancient Recipes</string>
     <string name="mead_hall">Mead Hall</string>
     <string name="wisdom_of_odin">Wisdom of Odin</string>
+    <string name="runes_of_knowledge">Runes of Knowledge</string>
 
     <!-- Calculator labels -->
     <string name="original_gravity">Original Gravity</string>
     <string name="final_gravity">Final Gravity</string>
     <string name="temperature">Temperature (°F)</string>
-    <string name="calculate">Calculate</string>
-    <string name="back">Return to Great Hall</string>
+    <string name="calculate">Calculate Strength</string>
+    <string name="back">Return to Mead Hall</string>
 
     <!-- Results -->
-    <string name="abv_result">Strength: %.2f%% ABV</string>
-    <string name="plato_result">%.1f° Plato</string>
+    <string name="abv_result">ABV: %s</string>
+    <string name="plato_result">Original Gravity in Plato: %s</string>
 
     <!-- Example values -->
     <string name="og_example">1.055</string>

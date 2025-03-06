@@ -14,7 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ccsimenson.mjodr.navigation.NavGraph
 import com.ccsimenson.mjodr.ui.theme.MjodrTheme
 import com.ccsimenson.mjodr.ui.theme.VikingColors
-import com.ccsimenson.mjodr.ui.theme.VikingButton
+import com.ccsimenson.mjodr.ui.components.VikingButton
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

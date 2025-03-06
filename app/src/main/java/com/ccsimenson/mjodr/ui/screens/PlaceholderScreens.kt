@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ccsimenson.mjodr.R
-import com.ccsimenson.mjodr.ui.theme.VikingButton
+import com.ccsimenson.mjodr.ui.components.VikingButton
 import com.ccsimenson.mjodr.ui.theme.VikingColors
 
 @Composable
@@ -40,9 +40,8 @@ fun RecipesScreen(onNavigateBack: () -> Unit) {
             Spacer(modifier = Modifier.weight(1f))
 
             VikingButton(
-                text = stringResource(R.string.mead_hall),
-                onClick = onNavigateBack,
-                isSecondary = true
+                text = stringResource(R.string.back),
+                onClick = onNavigateBack
             )
         }
     }
@@ -77,9 +76,8 @@ fun MeadHallScreen(onNavigateBack: () -> Unit) {
             Spacer(modifier = Modifier.weight(1f))
 
             VikingButton(
-                text = stringResource(R.string.mead_hall),
-                onClick = onNavigateBack,
-                isSecondary = true
+                text = stringResource(R.string.back),
+                onClick = onNavigateBack
             )
         }
     }
@@ -114,9 +112,8 @@ fun HelpScreen(onNavigateBack: () -> Unit) {
             Spacer(modifier = Modifier.weight(1f))
 
             VikingButton(
-                text = stringResource(R.string.mead_hall),
-                onClick = onNavigateBack,
-                isSecondary = true
+                text = stringResource(R.string.back),
+                onClick = onNavigateBack
             )
         }
     }
