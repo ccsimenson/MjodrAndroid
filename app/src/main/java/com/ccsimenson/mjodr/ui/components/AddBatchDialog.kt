@@ -17,6 +17,8 @@ import androidx.compose.ui.window.Dialog
 import com.ccsimenson.mjodr.ui.theme.VikingColors
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import android.app.DatePickerDialog
+import androidx.compose.ui.platform.LocalContext
 
 /**
  * Dialog for adding a new mead batch
@@ -39,8 +41,8 @@ fun AddBatchDialog(
     onAddClick: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val showDatePicker = remember { mutableStateOf(false) }
     val dateFormatter = DateTimeFormatter.ofPattern("MMM d, yyyy")
+    val context = LocalContext.current
     
     Dialog(onDismissRequest = onDismiss) {
         Surface(
@@ -117,63 +119,21 @@ fun AddBatchDialog(
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { showDatePicker.value = true },
+                        .clickable { 
+                            val datePicker = DatePickerDialog(
+                                context,
+                                { _, year, month, dayOfMonth ->
+                                    onStartDateChange(LocalDate.of(year, month + 1, dayOfMonth))
+                                },
+                                startDate.year,
+                                startDate.monthValue - 1,
+                                startDate.dayOfMonth
+                            )
+                            datePicker.show()
+                        },
                     readOnly = true,
                     singleLine = true
                 )
-                
-                // Date Picker Dialog
-                if (showDatePicker.value) {
-                    DatePickerDialog(
-                        onDismissRequest = { showDatePicker.value = false },
-                        confirmButton = {
-                            Button(
-                                onClick = { showDatePicker.value = false },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = VikingColors.Gold,
-                                    contentColor = VikingColors.DarkWood
-                                )
-                            ) {
-                                Text("Confirm")
-                            }
-                        },
-                        dismissButton = {
-                            Button(
-                                onClick = { showDatePicker.value = false },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = VikingColors.LightWood,
-                                    contentColor = VikingColors.DarkWood
-                                )
-                            ) {
-                                Text("Cancel")
-                            }
-                        }
-                    ) {
-                        DatePicker(
-                            state = rememberDatePickerState(
-                                initialSelectedDateMillis = startDate.toEpochDay() * 24 * 60 * 60 * 1000
-                            ),
-                            colors = DatePickerDefaults.colors(
-                                containerColor = VikingColors.DarkWood,
-                                titleContentColor = VikingColors.Gold,
-                                headlineContentColor = VikingColors.Gold,
-                                weekdayContentColor = VikingColors.Parchment,
-                                subheadContentColor = VikingColors.Parchment,
-                                yearContentColor = VikingColors.Parchment,
-                                currentYearContentColor = VikingColors.Gold,
-                                selectedYearContentColor = VikingColors.DarkWood,
-                                selectedYearContainerColor = VikingColors.Gold,
-                                dayContentColor = VikingColors.Parchment,
-                                selectedDayContentColor = VikingColors.DarkWood,
-                                selectedDayContainerColor = VikingColors.Gold,
-                                todayContentColor = VikingColors.Gold,
-                                todayDateBorderColor = VikingColors.Gold
-                            ),
-                            showModeToggle = true,
-                            title = { Text("Select Brewing Start Date", color = VikingColors.Gold) }
-                        )
-                    }
-                }
                 
                 Spacer(modifier = Modifier.height(8.dp))
                 
