@@ -76,7 +76,8 @@ fun StrengthCalculatorScreen(
                         focusedLabelColor = VikingColors.Gold,
                         unfocusedLabelColor = VikingColors.LightWood,
                         cursorColor = VikingColors.Gold,
-                        textColor = VikingColors.Parchment
+                        focusedTextColor = VikingColors.Parchment,
+                        unfocusedTextColor = VikingColors.Parchment
                     ),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     modifier = Modifier.fillMaxWidth()
@@ -93,7 +94,8 @@ fun StrengthCalculatorScreen(
                         focusedLabelColor = VikingColors.Gold,
                         unfocusedLabelColor = VikingColors.LightWood,
                         cursorColor = VikingColors.Gold,
-                        textColor = VikingColors.Parchment
+                        focusedTextColor = VikingColors.Parchment,
+                        unfocusedTextColor = VikingColors.Parchment
                     ),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     modifier = Modifier.fillMaxWidth()

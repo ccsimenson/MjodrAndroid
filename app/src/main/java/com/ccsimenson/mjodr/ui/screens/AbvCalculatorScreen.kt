@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
@@ -95,7 +93,8 @@ fun AbvCalculatorScreen(
                         focusedLabelColor = VikingColors.Gold,
                         unfocusedLabelColor = VikingColors.TextDark,
                         cursorColor = VikingColors.Gold,
-                        textColor = VikingColors.TextDark
+                        focusedTextColor = VikingColors.TextDark,
+                        unfocusedTextColor = VikingColors.TextDark
                     ),
                     isError = viewModel.originalGravityError,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
@@ -128,7 +127,8 @@ fun AbvCalculatorScreen(
                         focusedLabelColor = VikingColors.Gold,
                         unfocusedLabelColor = VikingColors.TextDark,
                         cursorColor = VikingColors.Gold,
-                        textColor = VikingColors.TextDark
+                        focusedTextColor = VikingColors.TextDark,
+                        unfocusedTextColor = VikingColors.TextDark
                     ),
                     isError = viewModel.finalGravityError,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
@@ -173,7 +173,8 @@ fun AbvCalculatorScreen(
                         focusedLabelColor = VikingColors.Gold,
                         unfocusedLabelColor = VikingColors.TextDark,
                         cursorColor = VikingColors.Gold,
-                        textColor = VikingColors.TextDark
+                        focusedTextColor = VikingColors.TextDark,
+                        unfocusedTextColor = VikingColors.TextDark
                     ),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     modifier = Modifier.fillMaxWidth(),
