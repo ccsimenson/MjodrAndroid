@@ -153,13 +153,6 @@ fun MeadHallScreen(
                     }
                 }
             }
-            
-            // Back button
-            VikingButton(
-                text = stringResource(R.string.back),
-                onClick = onNavigateBack,
-                modifier = Modifier.fillMaxWidth()
-            )
         }
     }
 }
