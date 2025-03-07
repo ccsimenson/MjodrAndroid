@@ -1,7 +1,13 @@
 package com.ccsimenson.mjodr.ui.screens
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.weight
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -68,7 +74,7 @@ fun MeadHallScreen(onNavigateBack: () -> Unit) {
             Spacer(modifier = Modifier.weight(1f))
             
             Text(
-                text = "Batch tracking system coming soon...",
+                text = "Batch management coming soon...",
                 style = MaterialTheme.typography.bodyLarge,
                 color = VikingColors.Parchment
             )
@@ -104,7 +110,7 @@ fun HelpScreen(onNavigateBack: () -> Unit) {
             Spacer(modifier = Modifier.weight(1f))
             
             Text(
-                text = "The wisdom of Odin will be shared soon...",
+                text = "Help and guidance coming soon...",
                 style = MaterialTheme.typography.bodyLarge,
                 color = VikingColors.Parchment
             )

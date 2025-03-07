@@ -1,9 +1,25 @@
 package com.ccsimenson.mjodr.ui.screens
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -54,16 +70,15 @@ fun StrengthCalculatorScreen(
                     value = originalGravity,
                     onValueChange = { originalGravity = it },
                     label = { Text("Original Gravity", color = VikingColors.Parchment) },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = VikingColors.Gold,
                         unfocusedBorderColor = VikingColors.LightWood,
                         focusedLabelColor = VikingColors.Gold,
                         unfocusedLabelColor = VikingColors.LightWood,
                         cursorColor = VikingColors.Gold,
-                        focusedTextColor = VikingColors.Parchment,
-                        unfocusedTextColor = VikingColors.Parchment
+                        textColor = VikingColors.Parchment
                     ),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -72,64 +87,69 @@ fun StrengthCalculatorScreen(
                     value = finalGravity,
                     onValueChange = { finalGravity = it },
                     label = { Text("Final Gravity", color = VikingColors.Parchment) },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = VikingColors.Gold,
                         unfocusedBorderColor = VikingColors.LightWood,
                         focusedLabelColor = VikingColors.Gold,
                         unfocusedLabelColor = VikingColors.LightWood,
                         cursorColor = VikingColors.Gold,
-                        focusedTextColor = VikingColors.Parchment,
-                        unfocusedTextColor = VikingColors.Parchment
+                        textColor = VikingColors.Parchment
                     ),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                // Calculate Button with Viking styling
+                // Calculate Button
                 VikingButton(
                     text = "Calculate Strength",
                     onClick = {
                         try {
                             val og = originalGravity.toDouble()
                             val fg = finalGravity.toDouble()
-                            
-                            // Use exact Python implementation: (OG - FG) × 131.25
                             val abv = AbvCalculator.calculateAbv(og, fg)
-                            val plato = AbvCalculator.gravityToPlato(og)
-                            
-                            // Example values (OG=1.055, FG=1.015) should yield 5.25% ABV
+                            val plato = AbvCalculator.calculatePlato(og, fg)
                             abvResult = "%.2f%%".format(abv)
                             platoResult = "%.1f°P".format(plato)
                         } catch (e: Exception) {
                             abvResult = "Invalid input"
-                            platoResult = ""
+                            platoResult = "Invalid input"
                         }
-                    }
+                    },
+                    modifier = Modifier.fillMaxWidth()
                 )
+            }
 
-                // Results Display with Viking theme colors
-                if (abvResult.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Results display
+            if (abvResult.isNotEmpty()) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Text(
-                        text = "ABV: $abvResult",
+                        text = "Alcohol By Volume",
                         style = MaterialTheme.typography.titleLarge,
-                        color = VikingColors.Gold  // Soft gold (#DAA520) for results
+                        color = VikingColors.Gold
                     )
-                }
-                if (platoResult.isNotEmpty()) {
                     Text(
-                        text = "Original Gravity in Plato: $platoResult",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = VikingColors.Gold  // Soft gold (#DAA520) for results
+                        text = abvResult,
+                        style = MaterialTheme.typography.displayMedium,
+                        color = VikingColors.Parchment
+                    )
+                    
+                    Spacer(modifier = Modifier.height(16.dp))
+                    
+                    Text(
+                        text = "Plato",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = VikingColors.Gold
+                    )
+                    Text(
+                        text = platoResult,
+                        style = MaterialTheme.typography.displayMedium,
+                        color = VikingColors.Parchment
                     )
                 }
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                // Back Button with Viking styling
-                VikingButton(
-                    text = "Return to Mead Hall",
-                    onClick = onNavigateBack
-                )
             }
         }
     }

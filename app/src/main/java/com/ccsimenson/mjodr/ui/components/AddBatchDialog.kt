@@ -2,10 +2,22 @@ package com.ccsimenson.mjodr.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -68,16 +80,17 @@ fun AddBatchDialog(
                     value = name,
                     onValueChange = onNameChange,
                     label = { Text("Batch Name", color = VikingColors.Parchment) },
-                    colors = OutlinedTextFieldDefaults.colors(
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = VikingColors.Gold,
                         unfocusedBorderColor = VikingColors.LightWood,
                         focusedLabelColor = VikingColors.Gold,
                         unfocusedLabelColor = VikingColors.LightWood,
                         cursorColor = VikingColors.Gold,
-                        textColor = VikingColors.Parchment
-                    ),
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
+                        focusedTextColor = VikingColors.Parchment,
+                        unfocusedTextColor = VikingColors.Parchment
+                    )
                 )
                 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -87,36 +100,17 @@ fun AddBatchDialog(
                     value = recipe,
                     onValueChange = onRecipeChange,
                     label = { Text("Recipe", color = VikingColors.Parchment) },
-                    colors = OutlinedTextFieldDefaults.colors(
+                    modifier = Modifier.fillMaxWidth(),
+                    maxLines = 3,
+                    colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = VikingColors.Gold,
                         unfocusedBorderColor = VikingColors.LightWood,
                         focusedLabelColor = VikingColors.Gold,
                         unfocusedLabelColor = VikingColors.LightWood,
                         cursorColor = VikingColors.Gold,
-                        textColor = VikingColors.Parchment
-                    ),
-                    modifier = Modifier.fillMaxWidth(),
-                    maxLines = 3
-                )
-                
-                Spacer(modifier = Modifier.height(8.dp))
-                
-                // Start Date - simplified to just display the current date
-                OutlinedTextField(
-                    value = startDate.format(dateFormatter),
-                    onValueChange = { },
-                    label = { Text("Start Date", color = VikingColors.Parchment) },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = VikingColors.Gold,
-                        unfocusedBorderColor = VikingColors.LightWood,
-                        focusedLabelColor = VikingColors.Gold,
-                        unfocusedLabelColor = VikingColors.LightWood,
-                        cursorColor = VikingColors.Gold,
-                        textColor = VikingColors.Parchment
-                    ),
-                    modifier = Modifier.fillMaxWidth(),
-                    readOnly = true,
-                    singleLine = true
+                        focusedTextColor = VikingColors.Parchment,
+                        unfocusedTextColor = VikingColors.Parchment
+                    )
                 )
                 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -126,17 +120,18 @@ fun AddBatchDialog(
                     value = originalGravity,
                     onValueChange = onOriginalGravityChange,
                     label = { Text("Original Gravity", color = VikingColors.Parchment) },
-                    colors = OutlinedTextFieldDefaults.colors(
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = VikingColors.Gold,
                         unfocusedBorderColor = VikingColors.LightWood,
                         focusedLabelColor = VikingColors.Gold,
                         unfocusedLabelColor = VikingColors.LightWood,
                         cursorColor = VikingColors.Gold,
-                        textColor = VikingColors.Parchment
-                    ),
-                    modifier = Modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                    singleLine = true
+                        focusedTextColor = VikingColors.Parchment,
+                        unfocusedTextColor = VikingColors.Parchment
+                    )
                 )
                 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -145,18 +140,40 @@ fun AddBatchDialog(
                 OutlinedTextField(
                     value = targetFinalGravity,
                     onValueChange = onTargetFinalGravityChange,
-                    label = { Text("Target Final Gravity (Optional)", color = VikingColors.Parchment) },
-                    colors = OutlinedTextFieldDefaults.colors(
+                    label = { Text("Target Final Gravity", color = VikingColors.Parchment) },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = VikingColors.Gold,
                         unfocusedBorderColor = VikingColors.LightWood,
                         focusedLabelColor = VikingColors.Gold,
                         unfocusedLabelColor = VikingColors.LightWood,
                         cursorColor = VikingColors.Gold,
-                        textColor = VikingColors.Parchment
-                    ),
+                        focusedTextColor = VikingColors.Parchment,
+                        unfocusedTextColor = VikingColors.Parchment
+                    )
+                )
+                
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                // Start Date (read-only field)
+                OutlinedTextField(
+                    value = startDate.format(dateFormatter),
+                    onValueChange = { },
+                    label = { Text("Start Date", color = VikingColors.Parchment) },
                     modifier = Modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                    singleLine = true
+                    singleLine = true,
+                    readOnly = true,
+                    colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = VikingColors.Gold,
+                        unfocusedBorderColor = VikingColors.LightWood,
+                        focusedLabelColor = VikingColors.Gold,
+                        unfocusedLabelColor = VikingColors.LightWood,
+                        cursorColor = VikingColors.Gold,
+                        focusedTextColor = VikingColors.Parchment,
+                        unfocusedTextColor = VikingColors.Parchment
+                    )
                 )
                 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -165,39 +182,45 @@ fun AddBatchDialog(
                 OutlinedTextField(
                     value = notes,
                     onValueChange = onNotesChange,
-                    label = { Text("Brewing Notes", color = VikingColors.Parchment) },
-                    colors = OutlinedTextFieldDefaults.colors(
+                    label = { Text("Notes", color = VikingColors.Parchment) },
+                    modifier = Modifier.fillMaxWidth(),
+                    maxLines = 5,
+                    colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = VikingColors.Gold,
                         unfocusedBorderColor = VikingColors.LightWood,
                         focusedLabelColor = VikingColors.Gold,
                         unfocusedLabelColor = VikingColors.LightWood,
                         cursorColor = VikingColors.Gold,
-                        textColor = VikingColors.Parchment
-                    ),
-                    modifier = Modifier.fillMaxWidth(),
-                    maxLines = 3
+                        focusedTextColor = VikingColors.Parchment,
+                        unfocusedTextColor = VikingColors.Parchment
+                    )
                 )
                 
                 Spacer(modifier = Modifier.height(16.dp))
                 
-                // Buttons
+                // Action buttons
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceBetween
                 ) {
-                    VikingButton(
-                        text = "Cancel",
+                    TextButton(
                         onClick = onDismiss,
-                        modifier = Modifier.weight(1f)
-                    )
+                        colors = ButtonDefaults.textButtonColors(
+                            contentColor = VikingColors.Parchment
+                        )
+                    ) {
+                        Text("Cancel")
+                    }
                     
-                    Spacer(modifier = Modifier.width(8.dp))
-                    
-                    VikingButton(
-                        text = "Begin Fermentation",
+                    Button(
                         onClick = onAddClick,
-                        modifier = Modifier.weight(1f)
-                    )
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = VikingColors.Gold,
+                            contentColor = VikingColors.DarkWood
+                        )
+                    ) {
+                        Text("Add Batch")
+                    }
                 }
             }
         }

@@ -2,13 +2,26 @@ package com.ccsimenson.mjodr.ui.screens
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -57,7 +70,7 @@ fun RecipesScreen(
             // Header
             Text(
                 text = stringResource(R.string.ancient_recipes),
-                style = MaterialTheme.typography.headlineLarge,
+                style = androidx.compose.material3.MaterialTheme.typography.headlineLarge,
                 color = VikingColors.Gold,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
@@ -65,8 +78,8 @@ fun RecipesScreen(
             // Search bar
             OutlinedTextField(
                 value = viewModel.searchQuery,
-                onValueChange = { viewModel.updateSearchQuery(it) },
-                label = { Text(stringResource(R.string.search_hint), color = VikingColors.Parchment) },
+                onValueChange = viewModel::updateSearchQuery,
+                label = { Text(stringResource(R.string.search_recipes), color = VikingColors.Parchment) },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = VikingColors.Gold,
                     unfocusedBorderColor = VikingColors.LightWood,
@@ -90,7 +103,7 @@ fun RecipesScreen(
             
             // Search button
             VikingButton(
-                text = stringResource(R.string.search_recipes),
+                text = stringResource(R.string.search),
                 onClick = {
                     viewModel.searchRecipes()
                     keyboardController?.hide()
@@ -100,69 +113,37 @@ fun RecipesScreen(
             
             Spacer(modifier = Modifier.height(16.dp))
             
-            // Results or loading indicator
-            Box(modifier = Modifier.weight(1f)) {
-                when {
-                    viewModel.isLoading -> {
-                        CircularProgressIndicator(
-                            modifier = Modifier.align(Alignment.Center),
-                            color = VikingColors.Gold
-                        )
-                    }
-                    viewModel.errorMessage != null -> {
-                        Column(
-                            modifier = Modifier.align(Alignment.Center),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = viewModel.errorMessage ?: "Unknown error",
-                                color = VikingColors.Parchment,
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                            Spacer(modifier = Modifier.height(16.dp))
-                            VikingButton(
-                                text = stringResource(R.string.try_again),
-                                onClick = { viewModel.searchRecipes() }
-                            )
-                        }
-                    }
-                    searchResults.isEmpty() -> {
-                        Text(
-                            text = stringResource(R.string.no_recipes),
-                            color = VikingColors.Parchment,
-                            style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-                    else -> {
-                        LazyColumn {
-                            items(searchResults) { video ->
-                                RecipeVideoItem(
-                                    video = video,
-                                    onClick = { selectedVideo ->
-                                        // Open the video in YouTube app or browser
-                                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(selectedVideo.videoUrl))
-                                        context.startActivity(intent)
-                                    }
-                                )
-                            }
-                            
-                            // Load more button if there are more results
-                            item {
-                                if (searchResults.isNotEmpty()) {
-                                    VikingButton(
-                                        text = stringResource(R.string.load_more),
-                                        onClick = { viewModel.loadNextPage() },
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(vertical = 16.dp)
-                                    )
-                                }
-                            }
-                        }
-                    }
+            // Loading indicator
+            if (viewModel.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.padding(16.dp),
+                    color = VikingColors.Gold
+                )
+            }
+            
+            // Results
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(searchResults) { video ->
+                    RecipeVideoItem(
+                        video = video,
+                        onClick = { openYoutubeVideo(video, context) },
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
             }
         }
     }
+}
+
+/**
+ * Opens a YouTube video in the YouTube app or browser
+ */
+private fun openYoutubeVideo(video: YoutubeVideo, context: android.content.Context) {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=${video.id}"))
+    context.startActivity(intent)
 }
