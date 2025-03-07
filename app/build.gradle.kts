@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.ccsimenson.mjodr"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -59,6 +59,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // Compose dependencies for Viking-themed UI with custom colors:
     // - Dark wood brown (#2C1810) for background

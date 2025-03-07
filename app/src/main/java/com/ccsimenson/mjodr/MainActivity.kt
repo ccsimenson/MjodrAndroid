@@ -6,6 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -15,6 +20,8 @@ import com.ccsimenson.mjodr.navigation.NavGraph
 import com.ccsimenson.mjodr.ui.theme.MjodrTheme
 import com.ccsimenson.mjodr.ui.theme.VikingColors
 import com.ccsimenson.mjodr.ui.components.VikingButton
+import com.ccsimenson.mjodr.ui.screens.SplashScreen
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,8 +32,18 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = VikingColors.DarkWood
                 ) {
-                    val navController = rememberNavController()
-                    NavGraph(navController = navController)
+                    var showSplash by remember { mutableStateOf(true) }
+                    
+                    if (showSplash) {
+                        SplashScreen()
+                        LaunchedEffect(key1 = true) {
+                            delay(2000) // Show splash for 2 seconds
+                            showSplash = false
+                        }
+                    } else {
+                        val navController = rememberNavController()
+                        NavGraph(navController = navController)
+                    }
                 }
             }
         }

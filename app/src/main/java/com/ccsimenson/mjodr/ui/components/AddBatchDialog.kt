@@ -1,17 +1,22 @@
 package com.ccsimenson.mjodr.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.ccsimenson.mjodr.ui.theme.VikingColors
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 /**
  * Dialog for adding a new mead batch
@@ -24,14 +29,19 @@ fun AddBatchDialog(
     originalGravity: String,
     targetFinalGravity: String,
     notes: String,
+    startDate: LocalDate = LocalDate.now(),
     onNameChange: (String) -> Unit,
     onRecipeChange: (String) -> Unit,
     onOriginalGravityChange: (String) -> Unit,
     onTargetFinalGravityChange: (String) -> Unit,
     onNotesChange: (String) -> Unit,
+    onStartDateChange: (LocalDate) -> Unit = {},
     onAddClick: () -> Unit,
     onDismiss: () -> Unit
 ) {
+    val showDatePicker = remember { mutableStateOf(false) }
+    val dateFormatter = DateTimeFormatter.ofPattern("MMM d, yyyy")
+    
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             modifier = Modifier
@@ -89,6 +99,81 @@ fun AddBatchDialog(
                     modifier = Modifier.fillMaxWidth(),
                     maxLines = 3
                 )
+                
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                // Start Date
+                OutlinedTextField(
+                    value = startDate.format(dateFormatter),
+                    onValueChange = { },
+                    label = { Text("Start Date", color = VikingColors.Parchment) },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = VikingColors.Gold,
+                        unfocusedBorderColor = VikingColors.LightWood,
+                        focusedLabelColor = VikingColors.Gold,
+                        unfocusedLabelColor = VikingColors.LightWood,
+                        cursorColor = VikingColors.Gold,
+                        textColor = VikingColors.Parchment
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { showDatePicker.value = true },
+                    readOnly = true,
+                    singleLine = true
+                )
+                
+                // Date Picker Dialog
+                if (showDatePicker.value) {
+                    DatePickerDialog(
+                        onDismissRequest = { showDatePicker.value = false },
+                        confirmButton = {
+                            Button(
+                                onClick = { showDatePicker.value = false },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = VikingColors.Gold,
+                                    contentColor = VikingColors.DarkWood
+                                )
+                            ) {
+                                Text("Confirm")
+                            }
+                        },
+                        dismissButton = {
+                            Button(
+                                onClick = { showDatePicker.value = false },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = VikingColors.LightWood,
+                                    contentColor = VikingColors.DarkWood
+                                )
+                            ) {
+                                Text("Cancel")
+                            }
+                        }
+                    ) {
+                        DatePicker(
+                            state = rememberDatePickerState(
+                                initialSelectedDateMillis = startDate.toEpochDay() * 24 * 60 * 60 * 1000
+                            ),
+                            colors = DatePickerDefaults.colors(
+                                containerColor = VikingColors.DarkWood,
+                                titleContentColor = VikingColors.Gold,
+                                headlineContentColor = VikingColors.Gold,
+                                weekdayContentColor = VikingColors.Parchment,
+                                subheadContentColor = VikingColors.Parchment,
+                                yearContentColor = VikingColors.Parchment,
+                                currentYearContentColor = VikingColors.Gold,
+                                selectedYearContentColor = VikingColors.DarkWood,
+                                selectedYearContainerColor = VikingColors.Gold,
+                                dayContentColor = VikingColors.Parchment,
+                                selectedDayContentColor = VikingColors.DarkWood,
+                                selectedDayContainerColor = VikingColors.Gold,
+                                todayContentColor = VikingColors.Gold,
+                                todayDateBorderColor = VikingColors.Gold
+                            ),
+                            showModeToggle = true,
+                            title = { Text("Select Brewing Start Date", color = VikingColors.Gold) }
+                        )
+                    }
+                }
                 
                 Spacer(modifier = Modifier.height(8.dp))
                 

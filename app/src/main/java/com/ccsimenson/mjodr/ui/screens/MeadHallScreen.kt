@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.viewModel
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -42,11 +43,13 @@ fun MeadHallScreen(
             originalGravity = viewModel.newBatchOG,
             targetFinalGravity = viewModel.newBatchTargetFG,
             notes = viewModel.newBatchNotes,
+            startDate = viewModel.newBatchStartDate,
             onNameChange = viewModel::updateNewBatchName,
             onRecipeChange = viewModel::updateNewBatchRecipe,
             onOriginalGravityChange = viewModel::updateNewBatchOG,
             onTargetFinalGravityChange = viewModel::updateNewBatchTargetFG,
             onNotesChange = viewModel::updateNewBatchNotes,
+            onStartDateChange = viewModel::updateNewBatchStartDate,
             onAddClick = viewModel::addBatch,
             onDismiss = viewModel::hideAddBatchDialog
         )

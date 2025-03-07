@@ -4,12 +4,23 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Viking horn icon in soft gold -->
+    <!-- Viking drinking horn in soft gold -->
     <path
         android:fillColor="#DAA520"
-        android:pathData="M54,30 C45,30 37.5,37.5 37.5,46.5 C37.5,55.5 45,63 54,63 C63,63 70.5,55.5 70.5,46.5 C70.5,37.5 63,30 54,30 Z M54,60 C46.5,60 40.5,54 40.5,46.5 C40.5,39 46.5,33 54,33 C61.5,33 67.5,39 67.5,46.5 C67.5,54 61.5,60 54,60 Z"/>
-    <!-- Horn details -->
+        android:pathData="M36,42C36,42 38,36 45,33C52,30 60,33 66,39C72,45 75,54 72,63C69,72 63,75 60,75C57,75 54,72 54,69C54,66 57,63 60,63C63,63 66,60 66,54C66,48 63,42 57,39C51,36 45,39 42,42C39,45 39,48 39,48L36,42Z" />
+    
+    <!-- Horn rim details in light wood brown -->
     <path
         android:fillColor="#B08968"
-        android:pathData="M54,36 C48,36 43.5,40.5 43.5,46.5 C43.5,52.5 48,57 54,57 C60,57 64.5,52.5 64.5,46.5 C64.5,40.5 60,36 54,36 Z"/>
+        android:pathData="M36,42C36,42 38,36 45,33C52,30 60,33 66,39L63,42C57,36 51,33 45,36C39,39 39,42 39,45L36,42Z" />
+    
+    <!-- Mead liquid in deep amber -->
+    <path
+        android:fillColor="#8B0000"
+        android:pathData="M39,48C39,48 42,45 48,45C54,45 60,48 63,54C66,60 63,66 60,66C57,66 54,63 54,60C54,57 57,54 60,54C60,51 57,48 54,48C51,48 45,48 42,51L39,48Z" />
+    
+    <!-- Rune details in parchment -->
+    <path
+        android:fillColor="#F5E6D3"
+        android:pathData="M45,54L48,57L45,60M51,54L51,60M54,54L57,57L54,60" />
 </vector>

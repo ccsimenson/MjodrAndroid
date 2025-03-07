@@ -50,6 +50,9 @@ class MeadHallViewModel(application: Application) : AndroidViewModel(application
     
     var newBatchNotes by mutableStateOf("")
         private set
+        
+    var newBatchStartDate by mutableStateOf(LocalDate.now())
+        private set
     
     var showAddBatchDialog by mutableStateOf(false)
         private set
@@ -113,6 +116,7 @@ class MeadHallViewModel(application: Application) : AndroidViewModel(application
         newBatchOG = ""
         newBatchTargetFG = ""
         newBatchNotes = ""
+        newBatchStartDate = LocalDate.now()
     }
     
     /**
@@ -160,6 +164,13 @@ class MeadHallViewModel(application: Application) : AndroidViewModel(application
     }
     
     /**
+     * Update new batch start date
+     */
+    fun updateNewBatchStartDate(date: LocalDate) {
+        newBatchStartDate = date
+    }
+    
+    /**
      * Update new measurement gravity
      */
     fun updateNewMeasurementGravity(gravity: String) {
@@ -184,22 +195,26 @@ class MeadHallViewModel(application: Application) : AndroidViewModel(application
      * Add a new batch
      */
     fun addBatch() {
-        val og = newBatchOG.toDoubleOrNull() ?: return
-        val targetFg = newBatchTargetFG.toDoubleOrNull()
-        
-        val batch = MeadBatch(
-            name = newBatchName,
-            recipe = newBatchRecipe,
-            originalGravity = og,
-            targetFinalGravity = targetFg,
-            notes = newBatchNotes,
-            startDate = LocalDate.now(),
-            status = BatchStatus.FERMENTING
-        )
-        
         viewModelScope.launch {
-            repository.addBatch(batch)
-            hideAddBatchDialog()
+            try {
+                val og = newBatchOG.toDoubleOrNull() ?: 1.000
+                val targetFg = newBatchTargetFG.takeIf { it.isNotBlank() }?.toDoubleOrNull()
+                
+                val batch = MeadBatch(
+                    name = newBatchName.takeIf { it.isNotBlank() } ?: "Unnamed Mead",
+                    recipe = newBatchRecipe,
+                    originalGravity = og,
+                    targetFinalGravity = targetFg,
+                    notes = newBatchNotes,
+                    startDate = newBatchStartDate,
+                    status = BatchStatus.FERMENTING
+                )
+                
+                repository.addBatch(batch)
+                hideAddBatchDialog()
+            } catch (e: Exception) {
+                // Handle error
+            }
         }
     }
     

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+    
+    <!-- Base wood color -->
+    <path
+        android:fillColor="#2C1810"
+        android:pathData="M0,0h100v100h-100z" />
+    
+    <!-- Wood grain lines - vertical -->
+    <path
+        android:strokeColor="#3C2820"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:pathData="M10,0 L10,100 M25,0 L25,100 M40,0 L40,100 M55,0 L55,100 M70,0 L70,100 M85,0 L85,100" />
+    
+    <!-- Wood grain lines - horizontal knots -->
+    <path
+        android:strokeColor="#3C2820"
+        android:strokeWidth="1"
+        android:strokeLineCap="round"
+        android:pathData="M0,15 C10,12 20,18 30,15 C40,12 50,18 60,15 C70,12 80,18 90,15 C100,12" />
+    
+    <path
+        android:strokeColor="#3C2820"
+        android:strokeWidth="1"
+        android:strokeLineCap="round"
+        android:pathData="M0,35 C10,32 20,38 30,35 C40,32 50,38 60,35 C70,32 80,38 90,35 C100,32" />
+    
+    <path
+        android:strokeColor="#3C2820"
+        android:strokeWidth="1"
+        android:strokeLineCap="round"
+        android:pathData="M0,55 C10,52 20,58 30,55 C40,52 50,58 60,55 C70,52 80,58 90,55 C100,52" />
+    
+    <path
+        android:strokeColor="#3C2820"
+        android:strokeWidth="1"
+        android:strokeLineCap="round"
+        android:pathData="M0,75 C10,72 20,78 30,75 C40,72 50,78 60,75 C70,72 80,78 90,75 C100,72" />
+    
+    <path
+        android:strokeColor="#3C2820"
+        android:strokeWidth="1"
+        android:strokeLineCap="round"
+        android:pathData="M0,95 C10,92 20,98 30,95 C40,92 50,98 60,95 C70,92 80,98 90,95 C100,92" />
+    
+    <!-- Wood knots -->
+    <path
+        android:fillColor="#1C0800"
+        android:pathData="M25,25 C22,22 28,22 25,25 Z" />
+    
+    <path
+        android:fillColor="#1C0800"
+        android:pathData="M70,45 C67,42 73,42 70,45 Z" />
+    
+    <path
+        android:fillColor="#1C0800"
+        android:pathData="M40,75 C37,72 43,72 40,75 Z" />
+    
+    <path
+        android:fillColor="#1C0800"
+        android:pathData="M85,85 C82,82 88,82 85,85 Z" />
+</vector>
