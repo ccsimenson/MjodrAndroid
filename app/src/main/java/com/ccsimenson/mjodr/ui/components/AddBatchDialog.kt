@@ -17,8 +17,6 @@ import androidx.compose.ui.window.Dialog
 import com.ccsimenson.mjodr.ui.theme.VikingColors
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import android.app.DatePickerDialog
-import androidx.compose.ui.platform.LocalContext
 
 /**
  * Dialog for adding a new mead batch
@@ -42,7 +40,6 @@ fun AddBatchDialog(
     onDismiss: () -> Unit
 ) {
     val dateFormatter = DateTimeFormatter.ofPattern("MMM d, yyyy")
-    val context = LocalContext.current
     
     Dialog(onDismissRequest = onDismiss) {
         Surface(
@@ -104,7 +101,7 @@ fun AddBatchDialog(
                 
                 Spacer(modifier = Modifier.height(8.dp))
                 
-                // Start Date
+                // Start Date - simplified to just display the current date
                 OutlinedTextField(
                     value = startDate.format(dateFormatter),
                     onValueChange = { },
@@ -117,20 +114,7 @@ fun AddBatchDialog(
                         cursorColor = VikingColors.Gold,
                         textColor = VikingColors.Parchment
                     ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { 
-                            val datePicker = DatePickerDialog(
-                                context,
-                                { _, year, month, dayOfMonth ->
-                                    onStartDateChange(LocalDate.of(year, month + 1, dayOfMonth))
-                                },
-                                startDate.year,
-                                startDate.monthValue - 1,
-                                startDate.dayOfMonth
-                            )
-                            datePicker.show()
-                        },
+                    modifier = Modifier.fillMaxWidth(),
                     readOnly = true,
                     singleLine = true
                 )
