@@ -11,11 +11,11 @@
 
 ### 2. Recipes (Ancient Recipes)
 - [x] UI Components and Navigation
-- [ ] Implement YouTube API integration for mead recipes
-- [ ] Add local storage for favorite recipes
-- [ ] Create pre-populated list of traditional Viking mead recipes
-- [ ] Implement recipe filtering by type (traditional, modern, spiced, etc.)
-- [ ] Add recipe sharing functionality
+- [x] Implement YouTube API integration for mead recipes
+- [x] Add local storage for favorite recipes
+- [x] Create pre-populated list of traditional Viking mead recipes
+- [x] Implement recipe filtering by type (traditional, modern, spiced, etc.)
+- [x] Add recipe sharing functionality
 
 ### 3. Mead Hall (Batch Management)
 - [x] UI Components and Navigation
