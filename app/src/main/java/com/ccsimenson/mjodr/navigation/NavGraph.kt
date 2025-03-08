@@ -61,10 +61,18 @@ fun NavGraph(navController: NavHostController) {
                 showBottomBar = true
             ) {
                 MainScreen(
-                    onNavigateToCalculator = { navController.navigate(Screen.AbvCalculator.route) },
-                    onNavigateToRecipes = { navController.navigate(Screen.Recipes.route) },
-                    onNavigateToBatchManagement = { navController.navigate(Screen.MeadHall.route) },
-                    onNavigateToHelp = { navController.navigate(Screen.Help.route) }
+                    onNavigateToCalculator = { 
+                        navController.navigate(Screen.AbvCalculator.route) 
+                    },
+                    onNavigateToRecipes = { 
+                        navController.navigate(Screen.Recipes.route) 
+                    },
+                    onNavigateToBatchManagement = { 
+                        navController.navigate(Screen.MeadHall.route) 
+                    },
+                    onNavigateToHelp = { 
+                        navController.navigate(Screen.Help.route) 
+                    }
                 )
             }
         }

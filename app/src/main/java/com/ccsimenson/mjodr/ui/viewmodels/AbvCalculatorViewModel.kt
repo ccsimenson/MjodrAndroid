@@ -32,6 +32,13 @@ class AbvCalculatorViewModel : ViewModel() {
     var platoFG by mutableStateOf<Double?>(null)
         private set
     
+    // Temperature correction tracking
+    var temperatureCorrectionApplied by mutableStateOf(false)
+        private set
+    
+    var appliedTemperature by mutableStateOf("")
+        private set
+    
     // Error states
     var originalGravityError by mutableStateOf(false)
         private set
@@ -76,6 +83,8 @@ class AbvCalculatorViewModel : ViewModel() {
         originalGravityError = false
         finalGravityError = false
         ogFgComparisonError = false
+        temperatureCorrectionApplied = false
+        appliedTemperature = ""
         
         // Parse input values
         val og = originalGravity.toDoubleOrNull()
@@ -113,8 +122,20 @@ class AbvCalculatorViewModel : ViewModel() {
         }
         
         // Apply temperature correction if provided
-        val correctedOG = if (temp != null) applyTemperatureCorrection(og, temp) else og
-        val correctedFG = if (temp != null) applyTemperatureCorrection(fg, temp) else fg
+        val correctedOG: Double
+        val correctedFG: Double
+        
+        if (temp != null) {
+            // Track that temperature correction was applied
+            temperatureCorrectionApplied = true
+            appliedTemperature = temperature
+            
+            correctedOG = applyTemperatureCorrection(og, temp)
+            correctedFG = applyTemperatureCorrection(fg, temp)
+        } else {
+            correctedOG = og
+            correctedFG = fg
+        }
         
         // Calculate ABV
         abvResult = AbvCalculator.calculateAbv(correctedOG, correctedFG)
@@ -139,6 +160,8 @@ class AbvCalculatorViewModel : ViewModel() {
         originalGravityError = false
         finalGravityError = false
         ogFgComparisonError = false
+        temperatureCorrectionApplied = false
+        appliedTemperature = ""
     }
     
     /**

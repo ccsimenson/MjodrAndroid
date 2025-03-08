@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,7 +32,8 @@ fun MainScreen(
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .background(VikingColors.DarkWood)
+            .background(VikingColors.DarkWood),
+        color = VikingColors.DarkWood
     ) {
         Column(
             modifier = Modifier
@@ -42,16 +44,17 @@ fun MainScreen(
         ) {
             Text(
                 text = stringResource(id = R.string.app_name),
-                color = VikingColors.Parchment,
+                color = VikingColors.Gold,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Serif,
                 modifier = Modifier.padding(bottom = 32.dp)
             )
 
             // Main feature buttons with Viking styling
             VikingButton(
                 text = stringResource(id = R.string.sacred_measurements),
-                onClick = onNavigateToCalculator,
+                onClick = { onNavigateToCalculator() },
                 modifier = Modifier
                     .width(300.dp)
                     .height(60.dp)
@@ -61,7 +64,7 @@ fun MainScreen(
             
             VikingButton(
                 text = stringResource(id = R.string.ancient_recipes),
-                onClick = onNavigateToRecipes,
+                onClick = { onNavigateToRecipes() },
                 modifier = Modifier
                     .width(300.dp)
                     .height(60.dp)
@@ -71,7 +74,7 @@ fun MainScreen(
             
             VikingButton(
                 text = stringResource(id = R.string.mead_hall),
-                onClick = onNavigateToBatchManagement,
+                onClick = { onNavigateToBatchManagement() },
                 modifier = Modifier
                     .width(300.dp)
                     .height(60.dp)
@@ -81,7 +84,7 @@ fun MainScreen(
             
             VikingButton(
                 text = stringResource(id = R.string.wisdom_of_odin),
-                onClick = onNavigateToHelp,
+                onClick = { onNavigateToHelp() },
                 modifier = Modifier
                     .width(300.dp)
                     .height(60.dp)

@@ -15,12 +15,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ccsimenson.mjodr.navigation.NavGraph
+import com.ccsimenson.mjodr.navigation.Screen
 import com.ccsimenson.mjodr.ui.theme.MjodrTheme
 import com.ccsimenson.mjodr.ui.theme.VikingColors
 import com.ccsimenson.mjodr.ui.components.VikingButton
-import com.ccsimenson.mjodr.ui.screens.SplashScreen
+import com.ccsimenson.mjodr.ui.components.VikingScaffold
+import com.ccsimenson.mjodr.ui.screens.*
 import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
@@ -42,7 +46,87 @@ class MainActivity : ComponentActivity() {
                         }
                     } else {
                         val navController = rememberNavController()
-                        NavGraph(navController = navController)
+                        NavHost(
+                            navController = navController,
+                            startDestination = Screen.Home.route
+                        ) {
+                            composable(Screen.Home.route) {
+                                VikingScaffold(
+                                    navController = navController,
+                                    title = stringResource(id = R.string.app_name),
+                                    canNavigateBack = false,
+                                    showBottomBar = true
+                                ) {
+                                    MainScreen(
+                                        onNavigateToCalculator = {
+                                            navController.navigate(Screen.AbvCalculator.route)
+                                        },
+                                        onNavigateToRecipes = {
+                                            navController.navigate(Screen.Recipes.route)
+                                        },
+                                        onNavigateToBatchManagement = {
+                                            navController.navigate(Screen.MeadHall.route)
+                                        },
+                                        onNavigateToHelp = {
+                                            navController.navigate(Screen.Help.route)
+                                        }
+                                    )
+                                }
+                            }
+                            
+                            composable(Screen.AbvCalculator.route) {
+                                VikingScaffold(
+                                    navController = navController,
+                                    title = stringResource(id = R.string.sacred_measurements),
+                                    canNavigateBack = true,
+                                    showBottomBar = true
+                                ) {
+                                    AbvCalculatorScreen(
+                                        onNavigateBack = { navController.popBackStack() }
+                                    )
+                                }
+                            }
+                            
+                            composable(Screen.Recipes.route) {
+                                VikingScaffold(
+                                    navController = navController,
+                                    title = stringResource(id = R.string.ancient_recipes),
+                                    canNavigateBack = true,
+                                    showBottomBar = true
+                                ) {
+                                    RecipesScreen(
+                                        onNavigateBack = { navController.popBackStack() }
+                                    )
+                                }
+                            }
+                            
+                            composable(Screen.MeadHall.route) {
+                                VikingScaffold(
+                                    navController = navController,
+                                    title = stringResource(id = R.string.mead_hall),
+                                    canNavigateBack = true,
+                                    showBottomBar = true
+                                ) {
+                                    MeadHallScreen(
+                                        onNavigateBack = { navController.popBackStack() }
+                                    )
+                                }
+                            }
+                            
+                            composable(Screen.Help.route) {
+                                VikingScaffold(
+                                    navController = navController,
+                                    title = stringResource(id = R.string.wisdom_of_odin),
+                                    canNavigateBack = true,
+                                    showBottomBar = true
+                                ) {
+                                    TemporaryScreen(
+                                        title = stringResource(id = R.string.wisdom_of_odin),
+                                        onNavigateBack = { navController.popBackStack() }
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -54,7 +138,7 @@ class MainActivity : ComponentActivity() {
 fun MainScreen(
     onNavigateToCalculator: () -> Unit = {},
     onNavigateToRecipes: () -> Unit = {},
-    onNavigateToMeadHall: () -> Unit = {},
+    onNavigateToBatchManagement: () -> Unit = {},
     onNavigateToHelp: () -> Unit = {}
 ) {
     Column(
@@ -93,7 +177,7 @@ fun MainScreen(
 
             VikingButton(
                 text = stringResource(R.string.mead_hall),
-                onClick = onNavigateToMeadHall
+                onClick = onNavigateToBatchManagement
             )
 
             VikingButton(
@@ -101,5 +185,29 @@ fun MainScreen(
                 onClick = onNavigateToHelp
             )
         }
+    }
+}
+
+@Composable
+fun TemporaryScreen(title: String, onNavigateBack: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.displayLarge,
+            color = VikingColors.Gold
+        )
+        
+        Spacer(modifier = Modifier.height(32.dp))
+        
+        VikingButton(
+            text = stringResource(R.string.back),
+            onClick = onNavigateBack
+        )
     }
 }

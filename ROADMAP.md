@@ -1,5 +1,53 @@
 # Mjöðr Android App Roadmap
 
+## Feature Implementation Plan
+
+### 1. ABV Calculator (Sacred Measurements)
+- [x] UI Components and Navigation
+- [x] Implement temperature correction functionality
+- [ ] Add input validation with Viking-themed error messages
+- [ ] Implement Plato conversion display
+- [ ] Add historical context information about Viking brewing methods
+- [ ] Create sample calculations for traditional Viking meads
+
+### 2. Recipes (Ancient Recipes)
+- [x] UI Components and Navigation
+- [ ] Implement YouTube API integration for mead recipes
+- [ ] Add local storage for favorite recipes
+- [ ] Create pre-populated list of traditional Viking mead recipes
+- [ ] Implement recipe filtering by type (traditional, modern, spiced, etc.)
+- [ ] Add recipe sharing functionality
+
+### 3. Mead Hall (Batch Management)
+- [x] UI Components and Navigation
+- [ ] Implement local database for batch storage
+- [ ] Create batch tracking functionality (start date, readings, status)
+- [ ] Add measurement tracking with gravity and temperature
+- [ ] Implement batch status updates (primary, secondary, aging, bottled)
+- [ ] Add notifications for batch milestones
+- [ ] Implement batch statistics and reporting
+
+### 4. Help (Wisdom of Odin)
+- [x] UI Components and Navigation
+- [ ] Create comprehensive help content with Viking theme
+- [ ] Add brewing glossary with Norse terminology
+- [ ] Implement troubleshooting guide for common mead issues
+- [ ] Add historical context about Viking brewing traditions
+- [ ] Create FAQ section with Viking-themed responses
+
+## Data Models Implementation
+- [ ] Create MeadBatch data class and repository
+- [ ] Implement GravityMeasurement data class
+- [ ] Create BatchStatus enum with Viking-themed status names
+- [ ] Implement Recipe data class and repository
+- [ ] Create YoutubeVideo data model for recipe integration
+
+## API Integration
+- [ ] Set up YouTube Data API for recipe search
+- [ ] Implement proper API key management
+- [ ] Add caching for API responses to reduce quota usage
+- [ ] Implement error handling for API failures
+
 ## Final Steps Before Publishing
 
 ### 1. Testing & Quality Assurance

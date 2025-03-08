@@ -182,6 +182,16 @@ fun AbvCalculatorScreen(
                     singleLine = true
                 )
                 
+                // Temperature correction helper text
+                Text(
+                    text = stringResource(R.string.temp_correction_info),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = VikingColors.TextDark.copy(alpha = 0.7f),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, top = 4.dp)
+                )
+                
                 Spacer(modifier = Modifier.height(24.dp))
                 
                 // Calculate and Reset Buttons
@@ -234,6 +244,39 @@ fun AbvCalculatorScreen(
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
+                    
+                    // Temperature correction indicator if applied
+                    if (viewModel.temperatureCorrectionApplied) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp)
+                                .background(
+                                    color = VikingColors.DarkWood.copy(alpha = 0.3f),
+                                    shape = RoundedCornerShape(4.dp)
+                                )
+                                .padding(8.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.temp_correction_applied),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = VikingColors.TextDark,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                
+                                Text(
+                                    text = stringResource(R.string.temp_correction_details, viewModel.appliedTemperature),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = VikingColors.TextDark,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        }
+                    }
                     
                     // ABV Result
                     Box(

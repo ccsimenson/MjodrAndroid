@@ -17,6 +17,9 @@
     <string name="calculate">Calculate Strength</string>
     <string name="reset">Reset</string>
     <string name="back">Return to Mead Hall</string>
+    <string name="temp_correction_info">Optional: Enter temperature for more accurate results</string>
+    <string name="temp_correction_applied">Temperature correction applied</string>
+    <string name="temp_correction_details">Corrected from %1$s°F to 60°F standard</string>
 
     <!-- Results -->
     <string name="abv_result">ABV: %s</string>
