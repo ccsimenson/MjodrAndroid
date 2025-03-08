@@ -27,6 +27,12 @@
     <string name="wisdom_reveals">The Wisdom of Odin Reveals</string>
     <string name="enter_measurements">Enter Your Measurements</string>
     <string name="alcohol_by_volume">Alcohol By Volume</string>
+    
+    <!-- Plato Conversion -->
+    <string name="og_plato_result">Original Gravity: %1$s (SG) / %2$s°P</string>
+    <string name="fg_plato_result">Final Gravity: %1$s (SG) / %2$s°P</string>
+    <string name="plato_conversion_title">Gravity in Plato Scale</string>
+    <string name="plato_conversion_info">The ancient brewers measured sweetness in Plato</string>
 
     <!-- Validation messages -->
     <string name="error_invalid_gravity">Enter a valid gravity (e.g., 1.055)</string>

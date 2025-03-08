@@ -109,6 +109,8 @@ fun AbvCalculatorScreen(
                 abv = abv,
                 platoOG = viewModel.platoOG,
                 platoFG = viewModel.platoFG,
+                originalGravity = viewModel.originalGravity,
+                finalGravity = viewModel.finalGravity,
                 temperatureCorrectionApplied = viewModel.temperatureCorrectionApplied,
                 appliedTemperature = viewModel.appliedTemperature
             )
@@ -245,6 +247,8 @@ fun ResultsCard(
     abv: Double,
     platoOG: Double?,
     platoFG: Double?,
+    originalGravity: String,
+    finalGravity: String,
     temperatureCorrectionApplied: Boolean,
     appliedTemperature: String
 ) {
@@ -280,23 +284,78 @@ fun ResultsCard(
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp,
                 color = VikingColors.LightWood,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 16.dp)
             )
             
-            // Original gravity in Plato
-            platoOG?.let {
-                Text(
-                    text = stringResource(id = R.string.plato_result, "${decimalFormat.format(it)}°P"),
-                    fontFamily = vikingFontFamily,
-                    fontSize = 16.sp,
-                    color = VikingColors.LightWood.copy(alpha = 0.8f),
-                    modifier = Modifier.padding(bottom = 4.dp)
+            // Plato Conversion Section
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = VikingColors.DarkWood.copy(alpha = 0.7f)
                 )
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.plato_conversion_title),
+                        fontFamily = vikingFontFamily,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp,
+                        color = VikingColors.Gold,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    
+                    // Original gravity in both SG and Plato
+                    platoOG?.let {
+                        Text(
+                            text = stringResource(
+                                id = R.string.og_plato_result,
+                                originalGravity,
+                                decimalFormat.format(it)
+                            ),
+                            fontFamily = vikingFontFamily,
+                            fontSize = 14.sp,
+                            color = VikingColors.LightWood,
+                            modifier = Modifier.padding(bottom = 4.dp)
+                        )
+                    }
+                    
+                    // Final gravity in both SG and Plato
+                    platoFG?.let {
+                        Text(
+                            text = stringResource(
+                                id = R.string.fg_plato_result,
+                                finalGravity,
+                                decimalFormat.format(it)
+                            ),
+                            fontFamily = vikingFontFamily,
+                            fontSize = 14.sp,
+                            color = VikingColors.LightWood,
+                            modifier = Modifier.padding(bottom = 4.dp)
+                        )
+                    }
+                    
+                    // Informational text about Plato scale
+                    Text(
+                        text = stringResource(id = R.string.plato_conversion_info),
+                        fontFamily = vikingFontFamily,
+                        fontSize = 12.sp,
+                        fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+                        color = VikingColors.LightWood.copy(alpha = 0.7f),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+                }
             }
             
             // Temperature correction indicator
             if (temperatureCorrectionApplied) {
-                Spacer(modifier = Modifier.height(8.dp))
                 Divider(color = VikingColors.Gold.copy(alpha = 0.5f))
                 Spacer(modifier = Modifier.height(8.dp))
                 
