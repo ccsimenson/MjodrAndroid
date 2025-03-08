@@ -48,6 +48,16 @@ class AbvCalculatorViewModel : ViewModel() {
     
     var ogFgComparisonError by mutableStateOf(false)
         private set
+        
+    var temperatureError by mutableStateOf(false)
+        private set
+        
+    var emptyFieldsError by mutableStateOf(false)
+        private set
+    
+    // Error message states
+    var errorMessage by mutableStateOf<String?>(null)
+        private set
     
     /**
      * Update original gravity input
@@ -56,6 +66,8 @@ class AbvCalculatorViewModel : ViewModel() {
         originalGravity = value
         originalGravityError = false
         ogFgComparisonError = false
+        emptyFieldsError = false
+        errorMessage = null
     }
     
     /**
@@ -65,6 +77,8 @@ class AbvCalculatorViewModel : ViewModel() {
         finalGravity = value
         finalGravityError = false
         ogFgComparisonError = false
+        emptyFieldsError = false
+        errorMessage = null
     }
     
     /**
@@ -72,6 +86,8 @@ class AbvCalculatorViewModel : ViewModel() {
      */
     fun updateTemperature(value: String) {
         temperature = value
+        temperatureError = false
+        errorMessage = null
     }
     
     /**
@@ -83,8 +99,20 @@ class AbvCalculatorViewModel : ViewModel() {
         originalGravityError = false
         finalGravityError = false
         ogFgComparisonError = false
+        temperatureError = false
+        emptyFieldsError = false
         temperatureCorrectionApplied = false
         appliedTemperature = ""
+        errorMessage = null
+        
+        // Check for empty required fields
+        if (originalGravity.isBlank() || finalGravity.isBlank()) {
+            originalGravityError = originalGravity.isBlank()
+            finalGravityError = finalGravity.isBlank()
+            emptyFieldsError = true
+            errorMessage = "error_empty_fields_viking"
+            return false
+        }
         
         // Parse input values
         val og = originalGravity.toDoubleOrNull()
@@ -94,22 +122,26 @@ class AbvCalculatorViewModel : ViewModel() {
         // Validate inputs
         if (og == null) {
             originalGravityError = true
+            errorMessage = "error_invalid_gravity_viking"
             return false
         }
         
         if (fg == null) {
             finalGravityError = true
+            errorMessage = "error_invalid_gravity_viking"
             return false
         }
         
         // Validate gravity values are in reasonable range
         if (og < 0.990 || og > 1.200) {
             originalGravityError = true
+            errorMessage = "error_gravity_range_viking"
             return false
         }
         
         if (fg < 0.990 || fg > 1.200) {
             finalGravityError = true
+            errorMessage = "error_gravity_range_viking"
             return false
         }
         
@@ -118,6 +150,14 @@ class AbvCalculatorViewModel : ViewModel() {
             originalGravityError = true
             finalGravityError = true
             ogFgComparisonError = true
+            errorMessage = "error_og_less_than_fg_viking"
+            return false
+        }
+        
+        // Validate temperature if provided
+        if (temp != null && (temp < 32.0 || temp > 212.0)) {
+            temperatureError = true
+            errorMessage = "error_temperature_range_viking"
             return false
         }
         
@@ -160,8 +200,11 @@ class AbvCalculatorViewModel : ViewModel() {
         originalGravityError = false
         finalGravityError = false
         ogFgComparisonError = false
+        temperatureError = false
+        emptyFieldsError = false
         temperatureCorrectionApplied = false
         appliedTemperature = ""
+        errorMessage = null
     }
     
     /**

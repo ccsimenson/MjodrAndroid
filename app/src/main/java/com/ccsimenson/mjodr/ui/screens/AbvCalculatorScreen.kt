@@ -1,27 +1,12 @@
 package com.ccsimenson.mjodr.ui.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,335 +14,308 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ccsimenson.mjodr.R
 import com.ccsimenson.mjodr.ui.components.VikingButton
 import com.ccsimenson.mjodr.ui.theme.VikingColors
+import com.ccsimenson.mjodr.ui.theme.vikingFontFamily
 import com.ccsimenson.mjodr.ui.viewmodels.AbvCalculatorViewModel
 import java.text.DecimalFormat
 
 /**
- * ABV Calculator screen with Viking theme
- * Implements the core ABV calculation functionality with temperature correction and Plato conversion
+ * ABV Calculator Screen
+ * Allows users to calculate ABV based on original and final gravity readings
  */
 @Composable
 fun AbvCalculatorScreen(
     onNavigateBack: () -> Unit,
     viewModel: AbvCalculatorViewModel = viewModel()
 ) {
-    val decimalFormat = DecimalFormat("#.##")
+    val scrollState = rememberScrollState()
     
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Input Card
-        Card(
+        // Title
+        Text(
+            text = stringResource(id = R.string.enter_measurements),
+            fontFamily = vikingFontFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = 24.sp,
+            color = VikingColors.Gold,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        
+        // Input fields
+        GravityInputField(
+            value = viewModel.originalGravity,
+            onValueChange = { viewModel.updateOriginalGravity(it) },
+            label = stringResource(id = R.string.original_gravity),
+            placeholder = stringResource(id = R.string.og_example),
+            isError = viewModel.originalGravityError
+        )
+        
+        GravityInputField(
+            value = viewModel.finalGravity,
+            onValueChange = { viewModel.updateFinalGravity(it) },
+            label = stringResource(id = R.string.final_gravity),
+            placeholder = stringResource(id = R.string.fg_example),
+            isError = viewModel.finalGravityError
+        )
+        
+        TemperatureInputField(
+            value = viewModel.temperature,
+            onValueChange = { viewModel.updateTemperature(it) },
+            label = stringResource(id = R.string.temperature),
+            placeholder = stringResource(id = R.string.temp_example),
+            isError = viewModel.temperatureError
+        )
+        
+        // Display error message if any
+        viewModel.errorMessage?.let { errorKey ->
+            ErrorMessage(errorKey)
+        }
+        
+        // Buttons
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = VikingColors.LightWood,
-                contentColor = VikingColors.TextDark
-            ),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp
-            ),
-            shape = RoundedCornerShape(8.dp)
+                .padding(top = 16.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = stringResource(R.string.enter_measurements),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = VikingColors.TextDark,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
-                
-                // Original Gravity Input
-                OutlinedTextField(
-                    value = viewModel.originalGravity,
-                    onValueChange = viewModel::updateOriginalGravity,
-                    label = { Text(stringResource(R.string.original_gravity), color = VikingColors.TextDark) },
-                    placeholder = { Text(stringResource(R.string.og_example), color = VikingColors.TextDark.copy(alpha = 0.6f)) },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = VikingColors.Gold,
-                        unfocusedBorderColor = VikingColors.TextDark,
-                        focusedLabelColor = VikingColors.Gold,
-                        unfocusedLabelColor = VikingColors.TextDark,
-                        cursorColor = VikingColors.Gold,
-                        focusedTextColor = VikingColors.TextDark,
-                        unfocusedTextColor = VikingColors.TextDark
-                    ),
-                    isError = viewModel.originalGravityError,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
-                )
-                
-                if (viewModel.originalGravityError && !viewModel.ogFgComparisonError) {
-                    Text(
-                        text = stringResource(R.string.error_invalid_gravity),
-                        color = VikingColors.DeepRed,
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, top = 4.dp)
-                    )
-                }
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                
-                // Final Gravity Input
-                OutlinedTextField(
-                    value = viewModel.finalGravity,
-                    onValueChange = viewModel::updateFinalGravity,
-                    label = { Text(stringResource(R.string.final_gravity), color = VikingColors.TextDark) },
-                    placeholder = { Text(stringResource(R.string.fg_example), color = VikingColors.TextDark.copy(alpha = 0.6f)) },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = VikingColors.Gold,
-                        unfocusedBorderColor = VikingColors.TextDark,
-                        focusedLabelColor = VikingColors.Gold,
-                        unfocusedLabelColor = VikingColors.TextDark,
-                        cursorColor = VikingColors.Gold,
-                        focusedTextColor = VikingColors.TextDark,
-                        unfocusedTextColor = VikingColors.TextDark
-                    ),
-                    isError = viewModel.finalGravityError,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
-                )
-                
-                if (viewModel.finalGravityError && !viewModel.ogFgComparisonError) {
-                    Text(
-                        text = stringResource(R.string.error_invalid_gravity),
-                        color = VikingColors.DeepRed,
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, top = 4.dp)
-                    )
-                }
-                
-                // OG/FG comparison error
-                if (viewModel.ogFgComparisonError) {
-                    Text(
-                        text = stringResource(R.string.error_og_less_than_fg),
-                        color = VikingColors.DeepRed,
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, top = 4.dp)
-                    )
-                }
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                
-                // Temperature Input (Optional)
-                OutlinedTextField(
-                    value = viewModel.temperature,
-                    onValueChange = viewModel::updateTemperature,
-                    label = { Text(stringResource(R.string.temperature), color = VikingColors.TextDark) },
-                    placeholder = { Text(stringResource(R.string.temp_example), color = VikingColors.TextDark.copy(alpha = 0.6f)) },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = VikingColors.Gold,
-                        unfocusedBorderColor = VikingColors.TextDark,
-                        focusedLabelColor = VikingColors.Gold,
-                        unfocusedLabelColor = VikingColors.TextDark,
-                        cursorColor = VikingColors.Gold,
-                        focusedTextColor = VikingColors.TextDark,
-                        unfocusedTextColor = VikingColors.TextDark
-                    ),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
-                )
-                
-                // Temperature correction helper text
-                Text(
-                    text = stringResource(R.string.temp_correction_info),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = VikingColors.TextDark.copy(alpha = 0.7f),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, top = 4.dp)
-                )
-                
-                Spacer(modifier = Modifier.height(24.dp))
-                
-                // Calculate and Reset Buttons
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    VikingButton(
-                        text = stringResource(R.string.reset),
-                        onClick = viewModel::reset,
-                        modifier = Modifier.weight(1f)
-                    )
-                    
-                    Spacer(modifier = Modifier.width(8.dp))
-                    
-                    VikingButton(
-                        text = stringResource(R.string.calculate),
-                        onClick = { viewModel.calculate() },
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-            }
+            VikingButton(
+                onClick = { viewModel.calculate() },
+                text = stringResource(id = R.string.calculate),
+                modifier = Modifier.weight(1f)
+            )
+            
+            Spacer(modifier = Modifier.width(8.dp))
+            
+            VikingButton(
+                onClick = { viewModel.reset() },
+                text = stringResource(id = R.string.reset),
+                modifier = Modifier.weight(1f)
+            )
         }
         
-        // Results Card (only shown when results are available)
+        // Results
         viewModel.abvResult?.let { abv ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = VikingColors.Gold.copy(alpha = 0.9f),
-                    contentColor = VikingColors.TextDark
-                ),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 4.dp
-                ),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = stringResource(R.string.wisdom_reveals),
-                        style = MaterialTheme.typography.titleLarge,
-                        color = VikingColors.TextDark,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-                    
-                    // Temperature correction indicator if applied
-                    if (viewModel.temperatureCorrectionApplied) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 8.dp)
-                                .background(
-                                    color = VikingColors.DarkWood.copy(alpha = 0.3f),
-                                    shape = RoundedCornerShape(4.dp)
-                                )
-                                .padding(8.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.temp_correction_applied),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = VikingColors.TextDark,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                
-                                Text(
-                                    text = stringResource(R.string.temp_correction_details, viewModel.appliedTemperature),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = VikingColors.TextDark,
-                                    textAlign = TextAlign.Center
-                                )
-                            }
-                        }
-                    }
-                    
-                    // ABV Result
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 16.dp)
-                            .background(
-                                color = VikingColors.DarkWood,
-                                shape = RoundedCornerShape(4.dp)
-                            )
-                            .padding(16.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = "${decimalFormat.format(abv)}%",
-                                style = MaterialTheme.typography.headlineLarge,
-                                color = VikingColors.Parchment,
-                                fontWeight = FontWeight.Bold
-                            )
-                            
-                            Text(
-                                text = stringResource(R.string.alcohol_by_volume),
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = VikingColors.Gold,
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                    }
-                    
-                    Spacer(modifier = Modifier.height(16.dp))
-                    
-                    // Plato Conversions
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        // Original Gravity in Plato
-                        Column(
-                            modifier = Modifier.weight(1f),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = stringResource(R.string.original_gravity),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = VikingColors.TextDark
-                            )
-                            
-                            Text(
-                                text = "${decimalFormat.format(viewModel.platoOG)}°P",
-                                style = MaterialTheme.typography.titleLarge,
-                                color = VikingColors.TextDark,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                        
-                        // Final Gravity in Plato
-                        Column(
-                            modifier = Modifier.weight(1f),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = stringResource(R.string.final_gravity),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = VikingColors.TextDark
-                            )
-                            
-                            Text(
-                                text = "${decimalFormat.format(viewModel.platoFG)}°P",
-                                style = MaterialTheme.typography.titleLarge,
-                                color = VikingColors.TextDark,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    }
-                }
+            ResultsCard(
+                abv = abv,
+                platoOG = viewModel.platoOG,
+                platoFG = viewModel.platoFG,
+                temperatureCorrectionApplied = viewModel.temperatureCorrectionApplied,
+                appliedTemperature = viewModel.appliedTemperature
+            )
+        }
+    }
+}
+
+/**
+ * Input field for gravity values
+ */
+@Composable
+fun GravityInputField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    placeholder: String,
+    isError: Boolean
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(text = label) },
+        placeholder = { Text(text = placeholder) },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp),
+        isError = isError,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = VikingColors.Gold,
+            unfocusedBorderColor = VikingColors.LightWood,
+            errorBorderColor = VikingColors.Red,
+            cursorColor = VikingColors.Gold,
+            focusedTextColor = VikingColors.LightWood,
+            unfocusedTextColor = VikingColors.LightWood,
+            focusedPlaceholderColor = VikingColors.LightWood.copy(alpha = 0.6f),
+            unfocusedPlaceholderColor = VikingColors.LightWood.copy(alpha = 0.6f),
+            focusedLabelColor = VikingColors.Gold,
+            unfocusedLabelColor = VikingColors.LightWood,
+            errorLabelColor = VikingColors.Red
+        )
+    )
+}
+
+/**
+ * Input field for temperature values
+ */
+@Composable
+fun TemperatureInputField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    placeholder: String,
+    isError: Boolean
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            label = { Text(text = label) },
+            placeholder = { Text(text = placeholder) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 4.dp),
+            isError = isError,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = VikingColors.Gold,
+                unfocusedBorderColor = VikingColors.LightWood,
+                errorBorderColor = VikingColors.Red,
+                cursorColor = VikingColors.Gold,
+                focusedTextColor = VikingColors.LightWood,
+                unfocusedTextColor = VikingColors.LightWood,
+                focusedPlaceholderColor = VikingColors.LightWood.copy(alpha = 0.6f),
+                unfocusedPlaceholderColor = VikingColors.LightWood.copy(alpha = 0.6f),
+                focusedLabelColor = VikingColors.Gold,
+                unfocusedLabelColor = VikingColors.LightWood,
+                errorLabelColor = VikingColors.Red
+            )
+        )
+        
+        // Helper text for temperature field
+        Text(
+            text = stringResource(id = R.string.temp_correction_info),
+            color = VikingColors.LightWood.copy(alpha = 0.7f),
+            fontSize = 12.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, bottom = 8.dp)
+        )
+    }
+}
+
+/**
+ * Display Viking-themed error message
+ */
+@Composable
+fun ErrorMessage(errorKey: String) {
+    val errorResId = when (errorKey) {
+        "error_invalid_gravity_viking" -> R.string.error_invalid_gravity_viking
+        "error_og_less_than_fg_viking" -> R.string.error_og_less_than_fg_viking
+        "error_gravity_range_viking" -> R.string.error_gravity_range_viking
+        "error_temperature_range_viking" -> R.string.error_temperature_range_viking
+        "error_empty_fields_viking" -> R.string.error_empty_fields_viking
+        else -> R.string.error_invalid_gravity
+    }
+    
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = VikingColors.Red.copy(alpha = 0.2f)
+        )
+    ) {
+        Text(
+            text = stringResource(id = errorResId),
+            color = VikingColors.Red,
+            fontFamily = vikingFontFamily,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
+    }
+}
+
+/**
+ * Card to display calculation results
+ */
+@Composable
+fun ResultsCard(
+    abv: Double,
+    platoOG: Double?,
+    platoFG: Double?,
+    temperatureCorrectionApplied: Boolean,
+    appliedTemperature: String
+) {
+    val decimalFormat = remember { DecimalFormat("#.##") }
+    
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 24.dp, bottom = 16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = VikingColors.DarkWood
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = stringResource(id = R.string.wisdom_reveals),
+                fontFamily = vikingFontFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                color = VikingColors.Gold,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+            
+            // ABV result
+            Text(
+                text = stringResource(id = R.string.abv_result, "${decimalFormat.format(abv)}%"),
+                fontFamily = vikingFontFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                color = VikingColors.LightWood,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            
+            // Original gravity in Plato
+            platoOG?.let {
+                Text(
+                    text = stringResource(id = R.string.plato_result, "${decimalFormat.format(it)}°P"),
+                    fontFamily = vikingFontFamily,
+                    fontSize = 16.sp,
+                    color = VikingColors.LightWood.copy(alpha = 0.8f),
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+            }
+            
+            // Temperature correction indicator
+            if (temperatureCorrectionApplied) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Divider(color = VikingColors.Gold.copy(alpha = 0.5f))
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                Text(
+                    text = stringResource(id = R.string.temp_correction_applied),
+                    fontFamily = vikingFontFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    color = VikingColors.Gold,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+                
+                Text(
+                    text = stringResource(id = R.string.temp_correction_details, appliedTemperature),
+                    fontFamily = vikingFontFamily,
+                    fontSize = 14.sp,
+                    color = VikingColors.LightWood.copy(alpha = 0.8f)
+                )
             }
         }
-        
-        Spacer(modifier = Modifier.weight(1f))
     }
 }

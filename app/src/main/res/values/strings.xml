@@ -31,6 +31,13 @@
     <!-- Validation messages -->
     <string name="error_invalid_gravity">Enter a valid gravity (e.g., 1.055)</string>
     <string name="error_og_less_than_fg">Original gravity must be greater than final gravity</string>
+    
+    <!-- Viking-themed error messages -->
+    <string name="error_invalid_gravity_viking">By Odin\'s eye! Enter a proper gravity value (e.g., 1.055)</string>
+    <string name="error_og_less_than_fg_viking">Thor\'s hammer! Original gravity must exceed final gravity</string>
+    <string name="error_gravity_range_viking">Loki\'s mischief! Gravity must be between 0.990 and 1.200</string>
+    <string name="error_temperature_range_viking">Frost giant\'s breath! Temperature must be between 32°F and 212°F</string>
+    <string name="error_empty_fields_viking">Heimdall sees all! You must fill in the required fields</string>
 
     <!-- Example values -->
     <string name="og_example">1.055</string>

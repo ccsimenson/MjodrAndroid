@@ -5,7 +5,7 @@
 ### 1. ABV Calculator (Sacred Measurements)
 - [x] UI Components and Navigation
 - [x] Implement temperature correction functionality
-- [ ] Add input validation with Viking-themed error messages
+- [x] Add input validation with Viking-themed error messages
 - [ ] Implement Plato conversion display
 - [ ] Add historical context information about Viking brewing methods
 - [ ] Create sample calculations for traditional Viking meads

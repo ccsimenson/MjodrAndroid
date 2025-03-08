@@ -6,6 +6,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+// Create a Viking-themed font family using a serif font
+val vikingFontFamily = FontFamily.Serif
+
 // Use Serif font family for Norse feel as it's more reliable across devices
 private val NorseFont = FontFamily.Serif
 

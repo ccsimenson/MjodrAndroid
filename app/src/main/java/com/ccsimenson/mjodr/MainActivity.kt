@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                         val navController = rememberNavController()
                         NavHost(
                             navController = navController,
-                            startDestination = Screen.Home.route
+                            startDestination = Screen.AbvCalculator.route
                         ) {
                             composable(Screen.Home.route) {
                                 VikingScaffold(
