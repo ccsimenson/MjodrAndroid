@@ -86,7 +86,8 @@ fun RecipesScreen(
                     focusedLabelColor = VikingColors.Gold,
                     unfocusedLabelColor = VikingColors.LightWood,
                     cursorColor = VikingColors.Gold,
-                    textColor = VikingColors.Parchment
+                    focusedTextColor = VikingColors.Parchment,
+                    unfocusedTextColor = VikingColors.Parchment
                 ),
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),

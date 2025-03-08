@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -109,7 +110,7 @@ fun StrengthCalculatorScreen(
                             val og = originalGravity.toDouble()
                             val fg = finalGravity.toDouble()
                             val abv = AbvCalculator.calculateAbv(og, fg)
-                            val plato = AbvCalculator.calculatePlato(og, fg)
+                            val plato = AbvCalculator.gravityToPlato(og)
                             abvResult = "%.2f%%".format(abv)
                             platoResult = "%.1f°P".format(plato)
                         } catch (e: Exception) {
