@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ccsimenson.mjodr.R
 import com.ccsimenson.mjodr.data.MeadRecipe
+import com.ccsimenson.mjodr.data.RecipeDifficulty
+import com.ccsimenson.mjodr.data.RecipeType
 import com.ccsimenson.mjodr.data.YoutubeVideo
 import com.ccsimenson.mjodr.ui.components.*
 import com.ccsimenson.mjodr.ui.theme.VikingColors
