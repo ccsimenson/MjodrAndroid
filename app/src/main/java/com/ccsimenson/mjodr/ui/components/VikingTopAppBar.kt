@@ -1,6 +1,7 @@
 package com.ccsimenson.mjodr.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -12,8 +13,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.ccsimenson.mjodr.ui.theme.VikingColors
 
 /**
@@ -32,14 +38,20 @@ fun VikingTopAppBar(
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp,
+                    fontFamily = FontFamily.Serif
                 ),
                 color = VikingColors.Gold,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center
             )
         },
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(64.dp)
+            .shadow(elevation = 8.dp),
         navigationIcon = {
             if (canNavigateBack) {
                 IconButton(onClick = onNavigateBack) {
@@ -52,8 +64,10 @@ fun VikingTopAppBar(
             }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = VikingColors.DarkWood.copy(alpha = 0.95f),
-            titleContentColor = VikingColors.Gold
+            containerColor = VikingColors.DarkWood,
+            titleContentColor = VikingColors.Gold,
+            navigationIconContentColor = VikingColors.Gold,
+            actionIconContentColor = VikingColors.Gold
         )
     )
 }

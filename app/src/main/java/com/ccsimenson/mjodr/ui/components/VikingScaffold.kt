@@ -1,5 +1,6 @@
 package com.ccsimenson.mjodr.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ccsimenson.mjodr.navigation.Screen
 import com.ccsimenson.mjodr.ui.theme.VikingColors
@@ -45,13 +47,20 @@ fun VikingScaffold(
         containerColor = VikingColors.DarkWood
     ) { innerPadding ->
         Surface(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(VikingColors.DarkWood),
             color = VikingColors.DarkWood
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding)
+                    .padding(
+                        top = innerPadding.calculateTopPadding(),
+                        bottom = innerPadding.calculateBottomPadding(),
+                        start = 8.dp,
+                        end = 8.dp
+                    )
             ) {
                 content(innerPadding)
             }
