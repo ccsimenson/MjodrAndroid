@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ccsimenson.mjodr.ui.theme.VikingColors
+import com.ccsimenson.mjodr.ui.theme.vikingFontFamily
 
 /**
  * Top app bar with Viking theme
@@ -40,7 +41,7 @@ fun VikingTopAppBar(
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
-                    fontFamily = FontFamily.Serif
+                    fontFamily = vikingFontFamily
                 ),
                 color = VikingColors.Gold,
                 maxLines = 1,
@@ -51,13 +52,13 @@ fun VikingTopAppBar(
         modifier = Modifier
             .fillMaxWidth()
             .height(64.dp)
-            .shadow(elevation = 8.dp),
+            .shadow(elevation = 4.dp),
         navigationIcon = {
             if (canNavigateBack) {
                 IconButton(onClick = onNavigateBack) {
                     Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Navigate Back",
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "Back",
                         tint = VikingColors.Gold
                     )
                 }

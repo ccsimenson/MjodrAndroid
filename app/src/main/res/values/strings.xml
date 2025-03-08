@@ -58,4 +58,27 @@
     <string name="no_recipes">No ancient recipes found. Try another search.</string>
     <string name="try_again">Try Again</string>
     <string name="default_search">traditional viking mead</string>
+
+    <!-- Viking Brewing History -->
+    <string name="viking_brewing_title">Ancient Brewing Wisdom</string>
+    <string name="viking_brewing_intro">The art of brewing mead and ale was sacred to the Vikings, a tradition passed down through generations and protected by the gods themselves.</string>
+    
+    <string name="brewing_section_1_title">The Sacred Craft</string>
+    <string name="brewing_section_1_content">Vikings considered brewing to be a sacred craft, often associated with the god Aegir, who hosted feasts for the gods in his underwater hall. His cauldron, gifted by Thor, was said to brew the finest ale in all the nine realms. Brewing was primarily women\'s work, with the lady of the household (húsfreyja) overseeing this important task. The knowledge was passed from mother to daughter, with secret family recipes guarded closely.</string>
+    
+    <string name="brewing_section_2_title">Ingredients of the North</string>
+    <string name="brewing_section_2_content">Viking brewers used what was available in the harsh northern climate. Barley was the primary grain, though wheat and rye were also used when available. Hops were known but not widely used until later periods; instead, a mixture of herbs called \"gruit\" provided flavor and preservation. This could include bog myrtle, yarrow, juniper berries, heather, and mugwort. For mead, wild honey was the essential ingredient, often flavored with local berries, herbs, or spices.</string>
+    
+    <string name="brewing_section_3_title">Brewing Methods</string>
+    <string name="brewing_section_3_content">The brewing process began with malting the grain - soaking it in water until it germinated, then drying it to halt growth. The malted grain was crushed and mixed with hot water in wooden vessels to create the wort. This mixture was then boiled with herbs in large iron cauldrons. Fermentation relied on wild yeasts or the reuse of sediment from previous successful brews. The brew was fermented in wooden vats, often buried in the ground to maintain stable temperatures. The final product was stored in wooden barrels or pottery vessels.</string>
+    
+    <string name="brewing_section_4_title">Mead: Drink of Gods and Heroes</string>
+    <string name="brewing_section_4_content">Mead (mjǫðr) held special significance in Norse culture. According to myth, the Mead of Poetry was created from the blood of the wise being Kvasir and gave the drinker the gift of poetry and wisdom. In Valhalla, the fallen warriors drank mead served by Valkyries. Mead was brewed by mixing honey with water, sometimes adding fruits, herbs, or spices. The mixture was heated (but rarely boiled) and then fermented. The best meads were aged for years, developing complex flavors.</string>
+    
+    <string name="brewing_section_5_title">Ritual and Celebration</string>
+    <string name="brewing_section_5_content">Brewing was timed to coincide with important festivals and celebrations. Special brews were prepared for Yule (winter solstice), midsummer, weddings, and funerals. During these events, ceremonial toasts called \"minni\" were made to the gods and ancestors. The first toast was typically to Odin for victory, followed by toasts to Thor and Freyr for good harvests and peace. Failing to provide ale for guests was considered a serious breach of hospitality, which was one of the most important virtues in Viking society.</string>
+    
+    <string name="brewing_section_6_title">Legacy of Viking Brewing</string>
+    <string name="brewing_section_6_content">Many traditional Nordic brewing practices survived into modern times, particularly in rural areas. The tradition of farmhouse brewing in Norway, Sweden, Finland, and the Baltic countries preserves techniques that can be traced back to the Viking Age. The use of juniper branches in the brewing process, brewing in wooden vessels, and the cultural significance of home brewing all reflect this ancient heritage. Today\'s craft brewers and mead makers often draw inspiration from these historical methods, creating beverages that would be recognizable to our Viking ancestors.</string>
+
 </resources>

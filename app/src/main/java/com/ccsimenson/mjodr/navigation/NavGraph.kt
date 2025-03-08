@@ -31,6 +31,7 @@ sealed class Screen(val route: String) {
     object Recipes : Screen("recipes")
     object MeadHall : Screen("mead_hall")
     object Help : Screen("help")
+    object BrewingHistory : Screen("brewing_history")
 }
 
 @Composable

@@ -63,7 +63,7 @@ fun MjodrTheme(
 
     MaterialTheme(
         colorScheme = VikingColorScheme,
-        typography = VikingTypography,
+        typography = MjodrTypography,
         content = content
     )
 }

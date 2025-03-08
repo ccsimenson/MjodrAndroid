@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.ccsimenson.mjodr.R
 import com.ccsimenson.mjodr.ui.components.VikingButton
 import com.ccsimenson.mjodr.ui.theme.VikingColors
+import com.ccsimenson.mjodr.ui.theme.vikingFontFamily
 
 @Composable
 fun MainScreen(
@@ -45,9 +46,9 @@ fun MainScreen(
             Text(
                 text = stringResource(id = R.string.app_name),
                 color = VikingColors.Gold,
-                fontSize = 32.sp,
+                fontSize = 36.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif,
+                fontFamily = vikingFontFamily,
                 modifier = Modifier.padding(bottom = 32.dp)
             )
 

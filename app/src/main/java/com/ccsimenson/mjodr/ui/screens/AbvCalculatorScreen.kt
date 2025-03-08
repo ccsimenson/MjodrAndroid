@@ -209,33 +209,35 @@ fun TemperatureInputField(
  */
 @Composable
 fun ErrorMessage(errorKey: String) {
-    val errorResId = when (errorKey) {
-        "error_invalid_gravity_viking" -> R.string.error_invalid_gravity_viking
-        "error_og_less_than_fg_viking" -> R.string.error_og_less_than_fg_viking
-        "error_gravity_range_viking" -> R.string.error_gravity_range_viking
-        "error_temperature_range_viking" -> R.string.error_temperature_range_viking
-        "error_empty_fields_viking" -> R.string.error_empty_fields_viking
-        else -> R.string.error_invalid_gravity
-    }
-    
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = VikingColors.Red.copy(alpha = 0.2f)
-        )
-    ) {
-        Text(
-            text = stringResource(id = errorResId),
-            color = VikingColors.Red,
-            fontFamily = vikingFontFamily,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
+    if (errorKey.isNotEmpty()) {
+        val errorResId = when (errorKey) {
+            "error_invalid_gravity_viking" -> R.string.error_invalid_gravity_viking
+            "error_og_less_than_fg_viking" -> R.string.error_og_less_than_fg_viking
+            "error_gravity_range_viking" -> R.string.error_gravity_range_viking
+            "error_temperature_range_viking" -> R.string.error_temperature_range_viking
+            "error_empty_fields_viking" -> R.string.error_empty_fields_viking
+            else -> R.string.error_invalid_gravity
+        }
+        
+        Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
-        )
+                .padding(vertical = 8.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = VikingColors.Red.copy(alpha = 0.2f)
+            )
+        ) {
+            Text(
+                text = stringResource(id = errorResId),
+                color = VikingColors.Red,
+                fontFamily = vikingFontFamily,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            )
+        }
     }
 }
 

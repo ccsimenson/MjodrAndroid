@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                         val navController = rememberNavController()
                         NavHost(
                             navController = navController,
-                            startDestination = Screen.AbvCalculator.route
+                            startDestination = Screen.Home.route
                         ) {
                             composable(Screen.Home.route) {
                                 VikingScaffold(
@@ -69,6 +69,9 @@ class MainActivity : ComponentActivity() {
                                         },
                                         onNavigateToHelp = {
                                             navController.navigate(Screen.Help.route)
+                                        },
+                                        onNavigateToBrewingHistory = {
+                                            navController.navigate(Screen.BrewingHistory.route)
                                         }
                                     )
                                 }
@@ -122,6 +125,22 @@ class MainActivity : ComponentActivity() {
                                 ) {
                                     TemporaryScreen(
                                         title = stringResource(id = R.string.wisdom_of_odin),
+                                        onNavigateBack = { navController.popBackStack() },
+                                        onNavigateToBrewingHistory = { 
+                                            navController.navigate(Screen.BrewingHistory.route)
+                                        }
+                                    )
+                                }
+                            }
+                            
+                            composable(Screen.BrewingHistory.route) {
+                                VikingScaffold(
+                                    navController = navController,
+                                    title = stringResource(id = R.string.viking_brewing_title),
+                                    canNavigateBack = true,
+                                    showBottomBar = true
+                                ) {
+                                    VikingBrewingHistoryScreen(
                                         onNavigateBack = { navController.popBackStack() }
                                     )
                                 }
@@ -139,7 +158,8 @@ fun MainScreen(
     onNavigateToCalculator: () -> Unit = {},
     onNavigateToRecipes: () -> Unit = {},
     onNavigateToBatchManagement: () -> Unit = {},
-    onNavigateToHelp: () -> Unit = {}
+    onNavigateToHelp: () -> Unit = {},
+    onNavigateToBrewingHistory: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -184,12 +204,21 @@ fun MainScreen(
                 text = stringResource(R.string.wisdom_of_odin),
                 onClick = onNavigateToHelp
             )
+            
+            VikingButton(
+                text = stringResource(R.string.viking_brewing_title),
+                onClick = onNavigateToBrewingHistory
+            )
         }
     }
 }
 
 @Composable
-fun TemporaryScreen(title: String, onNavigateBack: () -> Unit) {
+fun TemporaryScreen(
+    title: String,
+    onNavigateBack: () -> Unit,
+    onNavigateToBrewingHistory: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -206,7 +235,14 @@ fun TemporaryScreen(title: String, onNavigateBack: () -> Unit) {
         Spacer(modifier = Modifier.height(32.dp))
         
         VikingButton(
-            text = stringResource(R.string.back),
+            text = stringResource(id = R.string.viking_brewing_title),
+            onClick = onNavigateToBrewingHistory
+        )
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        VikingButton(
+            text = "Return to Mead Hall",
             onClick = onNavigateBack
         )
     }

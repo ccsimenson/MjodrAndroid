@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ccsimenson.mjodr.ui.theme.VikingColors
+import com.ccsimenson.mjodr.ui.theme.vikingFontFamily
 
 @Composable
 fun VikingButton(
@@ -49,7 +50,7 @@ fun VikingButton(
         ),
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 6.dp,
-            pressedElevation = 2.dp,
+            pressedElevation = 8.dp,
             disabledElevation = 0.dp
         ),
         contentPadding = PaddingValues(16.dp),
@@ -57,16 +58,13 @@ fun VikingButton(
     ) {
         Text(
             text = text,
-            color = VikingColors.TextDark,
             style = TextStyle(
-                fontFamily = FontFamily.Serif,
+                fontFamily = vikingFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
-                letterSpacing = 0.5.sp,
-                lineHeight = 22.sp,
                 textAlign = TextAlign.Center
             ),
-            modifier = Modifier.fillMaxWidth()
+            color = VikingColors.TextDark
         )
     }
 }

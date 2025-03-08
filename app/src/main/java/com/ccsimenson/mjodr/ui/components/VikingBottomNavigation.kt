@@ -25,6 +25,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.ccsimenson.mjodr.R
 import com.ccsimenson.mjodr.navigation.Screen
 import com.ccsimenson.mjodr.ui.theme.VikingColors
+import com.ccsimenson.mjodr.ui.theme.vikingFontFamily
 
 /**
  * Bottom navigation bar with Viking theme
@@ -82,7 +83,7 @@ fun VikingBottomNavigation(navController: NavController) {
                     Text(
                         text = stringResource(id = item.titleResId),
                         fontSize = 12.sp,
-                        fontFamily = FontFamily.Serif,
+                        fontFamily = vikingFontFamily,
                         fontWeight = FontWeight.Bold,
                         color = if (selected) VikingColors.Gold else VikingColors.LightWood
                     )
@@ -109,7 +110,7 @@ fun VikingBottomNavigation(navController: NavController) {
                     selectedTextColor = VikingColors.Gold,
                     unselectedIconColor = VikingColors.LightWood,
                     unselectedTextColor = VikingColors.LightWood,
-                    indicatorColor = VikingColors.DeepRed.copy(alpha = 0.2f)
+                    indicatorColor = VikingColors.DarkWood
                 )
             )
         }

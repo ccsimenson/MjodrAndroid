@@ -7,8 +7,7 @@
 - [x] Implement temperature correction functionality
 - [x] Add input validation with Viking-themed error messages
 - [x] Implement Plato conversion display
-- [ ] Add historical context information about Viking brewing methods
-- [ ] Create sample calculations for traditional Viking meads
+- [x] Add historical context information about Viking brewing methods
 
 ### 2. Recipes (Ancient Recipes)
 - [x] UI Components and Navigation
