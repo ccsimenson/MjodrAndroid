@@ -22,11 +22,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ccsimenson.mjodr.data.MeadRecipe
 import com.ccsimenson.mjodr.ui.theme.VikingColors
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
  * Screen for displaying detailed information about a mead recipe
  * Styled with the Viking theme
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeDetailScreen(
     recipe: MeadRecipe,

@@ -37,7 +37,7 @@ import com.ccsimenson.mjodr.ui.viewmodels.ViewModelFactory
 /**
  * Ancient Recipes screen with both traditional recipes and YouTube recipe search functionality
  * Styled with the Viking theme
- */
+
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RecipesScreen(

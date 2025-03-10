@@ -14,7 +14,7 @@ data class MeadRecipe(
     val difficulty: RecipeDifficulty,
     val fermentationTime: String,
     val yield: String,
-    val isFavorite: Boolean = false,
+    var isFavorite: Boolean = false,
     val youtubeVideoId: String? = null
 )
 

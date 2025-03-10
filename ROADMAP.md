@@ -8,8 +8,7 @@
 - [x] Add input validation with Viking-themed error messages
 - [x] Implement Plato conversion display
 - [x] Add historical context information about Viking brewing methods
-
-### 2. Recipes (Ancient Recipes)
+# 2. Recipes (Ancient Recipes)
 - [x] UI Components and Navigation
 - [x] Implement YouTube API integration for mead recipes
 - [x] Add local storage for favorite recipes

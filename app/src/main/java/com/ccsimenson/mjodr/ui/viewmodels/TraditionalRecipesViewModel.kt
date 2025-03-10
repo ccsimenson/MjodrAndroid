@@ -47,6 +47,10 @@ class TraditionalRecipesViewModel(application: Application) : AndroidViewModel(a
     
     var isLoading by mutableStateOf(false)
         private set
+
+    private var _isFavorite by mutableStateOf(false)
+    val isFavorite: Boolean
+        get() = _isFavorite
     
     // Initialize with all recipes
     init {
@@ -113,13 +117,13 @@ class TraditionalRecipesViewModel(application: Application) : AndroidViewModel(a
     fun toggleFavorite(recipeId: String) {
         viewModelScope.launch {
             val recipe = allRecipes.find { it.id == recipeId } ?: return@launch
-            val newFavoriteStatus = !recipe.isFavorite
+            _isFavorite = !recipe.isFavorite
             
             // Update in DataStore
-            dataStoreManager.toggleFavoriteStatus(recipeId, newFavoriteStatus)
+            dataStoreManager.toggleFavoriteStatus(recipeId, _isFavorite)
             
             // Update in memory
-            recipe.isFavorite = newFavoriteStatus
+            recipe.isFavorite = _isFavorite
             
             // Refresh the list
             _recipes.value = applyFilters(allRecipes)
