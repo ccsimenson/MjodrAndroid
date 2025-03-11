@@ -100,6 +100,59 @@ class BatchRepository(context: Context) {
         updateBatch(updatedBatch)
     }
     
+    /**
+     * Update batch status and trigger notifications if needed
+     */
+    fun updateBatchStatus(batchId: String, newStatus: BatchStatus) {
+        val batch = getBatch(batchId) ?: return
+        val updatedBatch = batch.copy(status = newStatus)
+        updateBatch(updatedBatch)
+        
+        // Trigger notification if status change is significant
+        when (newStatus) {
+            BatchStatus.COMPLETED -> triggerNotification(
+                "Batch ${batch.name} completed!",
+                "Your mead is ready for bottling"
+            )
+            BatchStatus.FAILED -> triggerNotification(
+                "Batch ${batch.name} failed",
+                "Check your batch for potential issues"
+            )
+            else -> {}
+        }
+    }
+    
+    /**
+     * Trigger a notification for batch milestones
+     */
+    private fun triggerNotification(title: String, message: String) {
+        // Implementation would use Android's NotificationManager
+        // Placeholder for now
+    }
+    
+    /**
+     * Get batch statistics
+     */
+    fun getBatchStatistics(batchId: String): BatchStatistics {
+        val batch = getBatch(batchId) ?: return BatchStatistics()
+        return BatchStatistics(
+            totalMeasurements = batch.measurements.size,
+            daysFermenting = batch.startDate.until(LocalDate.now()).days,
+            abvTrend = calculateAbvTrend(batch),
+            temperatureTrend = calculateTemperatureTrend(batch)
+        )
+    }
+    
+    private fun calculateAbvTrend(batch: MeadBatch): List<Double> {
+        return batch.measurements.map { measurement ->
+            batch.calculateAbv(batch.originalGravity, measurement.gravity)
+        }
+    }
+    
+    private fun calculateTemperatureTrend(batch: MeadBatch): List<Double> {
+        return batch.measurements.mapNotNull { it.temperature }
+    }
+    
     companion object {
         private const val PREFS_NAME = "mead_batches"
         private const val KEY_BATCHES = "batches"

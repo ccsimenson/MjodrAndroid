@@ -50,6 +50,11 @@ android {
     }
 }
 
+repositories {
+    google()
+    mavenCentral()
+    maven { url = uri("https://jitpack.io") }
+}
 dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2024.02.00")
     implementation(composeBom)
@@ -87,6 +92,9 @@ dependencies {
     // DataStore for persistent storage
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.datastore:datastore-preferences-core:1.0.0")
+
+    // Charting library for batch statistics
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     // Testing dependencies
     testImplementation("junit:junit:4.13.2")

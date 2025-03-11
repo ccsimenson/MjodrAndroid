@@ -32,6 +32,7 @@ sealed class Screen(val route: String) {
     object MeadHall : Screen("mead_hall")
     object Help : Screen("help")
     object BrewingHistory : Screen("brewing_history")
+    object BatchStatistics : Screen("batch_statistics")
 }
 
 @Composable
@@ -181,6 +182,21 @@ fun NavGraph(navController: NavHostController) {
                     onNavigateBack = { navController.popBackStack() }
                 )
             }
+        }
+        
+        composable(
+            route = Screen.BatchStatistics.route + "/{batchId}",
+            arguments = listOf(
+                navArgument("batchId") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val batchId = it.arguments?.getString("batchId") ?: ""
+            BatchStatisticsScreen(
+                batchId = batchId,
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 }
