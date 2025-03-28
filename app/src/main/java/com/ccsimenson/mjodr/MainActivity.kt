@@ -5,27 +5,31 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ccsimenson.mjodr.navigation.NavGraph
-import com.ccsimenson.mjodr.navigation.Screen
 import com.ccsimenson.mjodr.ui.theme.MjodrTheme
 import com.ccsimenson.mjodr.ui.theme.VikingColors
-import com.ccsimenson.mjodr.ui.components.VikingButton
-import com.ccsimenson.mjodr.ui.components.VikingScaffold
 import com.ccsimenson.mjodr.ui.screens.*
 import kotlinx.coroutines.delay
+
+sealed class Screen(val route: String) {
+    object Home : Screen("home")
+    object AbvCalculator : Screen("abv_calculator")
+    object Recipes : Screen("recipes")
+    object MeadHall : Screen("mead_hall")
+    object Help : Screen("help")
+    object BrewingHistory : Screen("brewing_history")
+    object BatchDetails : Screen("batch_details")
+    object AddBatch : Screen("add_batch")
+    object Measurements : Screen("measurements")
+    object Statistics : Screen("statistics")
+    object Glossary : Screen("glossary")
+    object Troubleshooting : Screen("troubleshooting")
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -145,6 +149,84 @@ class MainActivity : ComponentActivity() {
                                     )
                                 }
                             }
+                            
+                            composable(Screen.BatchDetails.route) {
+                                VikingScaffold(
+                                    navController = navController,
+                                    title = stringResource(id = R.string.batch_details),
+                                    canNavigateBack = true,
+                                    showBottomBar = true
+                                ) {
+                                    BatchDetailsScreen(
+                                        onNavigateBack = { navController.popBackStack() }
+                                    )
+                                }
+                            }
+                            
+                            composable(Screen.AddBatch.route) {
+                                VikingScaffold(
+                                    navController = navController,
+                                    title = stringResource(id = R.string.add_batch),
+                                    canNavigateBack = true,
+                                    showBottomBar = true
+                                ) {
+                                    AddBatchScreen(
+                                        onNavigateBack = { navController.popBackStack() }
+                                    )
+                                }
+                            }
+                            
+                            composable(Screen.Measurements.route) {
+                                VikingScaffold(
+                                    navController = navController,
+                                    title = stringResource(id = R.string.measurements),
+                                    canNavigateBack = true,
+                                    showBottomBar = true
+                                ) {
+                                    MeasurementsScreen(
+                                        onNavigateBack = { navController.popBackStack() }
+                                    )
+                                }
+                            }
+                            
+                            composable(Screen.Glossary.route) {
+                                VikingScaffold(
+                                    navController = navController,
+                                    title = stringResource(id = R.string.norse_glossary),
+                                    canNavigateBack = true,
+                                    showBottomBar = true
+                                ) {
+                                    GlossaryScreen(
+                                        onNavigateBack = { navController.popBackStack() }
+                                    )
+                                }
+                            }
+                            
+                            composable(Screen.Troubleshooting.route) {
+                                VikingScaffold(
+                                    navController = navController,
+                                    title = stringResource(id = R.string.troubleshooting),
+                                    canNavigateBack = true,
+                                    showBottomBar = true
+                                ) {
+                                    TroubleshootingScreen(
+                                        onNavigateBack = { navController.popBackStack() }
+                                    )
+                                }
+                            }
+                            
+                            composable(Screen.Statistics.route) {
+                                VikingScaffold(
+                                    navController = navController,
+                                    title = stringResource(id = R.string.batch_statistics),
+                                    canNavigateBack = true,
+                                    showBottomBar = true
+                                ) {
+                                    StatisticsScreen(
+                                        onNavigateBack = { navController.popBackStack() }
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -243,6 +325,22 @@ fun TemporaryScreen(
         
         VikingButton(
             text = "Return to Mead Hall",
+            onClick = onNavigateBack
+        )
+    }
+}
+
+@Composable
+fun BatchDetailsScreen(onNavigateBack: () -> Unit) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        // Batch status updates
+        // Readings history
+        // Notes section
+        VikingButton(
+            text = stringResource(id = R.string.back_to_mead_hall),
             onClick = onNavigateBack
         )
     }
