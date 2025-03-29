@@ -3,6 +3,9 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
+    kotlin("kapt") //Added for annotation processing
+    id("kotlin-parcelize") // Added for Parcelable support
+    id("androidx.navigation.safeargs.kotlin") // Added for safe args support
 }
 
 android {

@@ -29,5 +29,7 @@ allprojects {
         google()
         mavenCentral()
         maven { url = uri("https://jitpack.io") }  // For MPAndroidChart
-    }
+        id("org.jetbrains.kotlin.kapt")
+        id("androidx.navigation.safeargs.kotlin")
+        }
 }
