@@ -7,10 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.ccsimenson.mjodr.data.dao.MeadBatchDao
 import com.ccsimenson.mjodr.data.dao.MeasurementDao
-import com.ccsimenson.mjodr.data.model.MeadBatch
-import com.ccsimenson.mjodr.data.model.GravityMeasurement
-import com.ccsimenson.mjodr.data.model.Recipe
-import com.ccsimenson.mjodr.data.model.YoutubeVideo
+import com.ccsimenson.mjodr.data.model.*
 import com.ccsimenson.mjodr.util.Converters
 
 @Database(
