@@ -5,12 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.9.21" apply false
     id("com.google.devtools.ksp") version "1.9.21-1.0.15" apply false
     id("com.google.dagger.hilt.android") version "2.47" apply false
-}
-
-tasks {
-    register("clean", Delete::class) {
-        delete(layout.buildDirectory)
-    }
+    id("androidx.navigation.safeargs") version "2.7.7" apply false
 }
 
 buildscript {
@@ -23,13 +18,42 @@ buildscript {
     }
 }
 
-// Add repositories block at root level
+tasks {
+    register("clean", Delete::class) {
+        delete(layout.buildDirectory)
+    }
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(23))
+    }
+}
+
 allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") }  // For MPAndroidChart
-        id("org.jetbrains.kotlin.kapt")
-        id("androidx.navigation.safeargs.kotlin")
-        }
+        maven { url = uri("https://jitpack.io") }
+    }
+}
+
+rootProject.name = "Mjodr"
+include(":app")
+
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+    }
 }
