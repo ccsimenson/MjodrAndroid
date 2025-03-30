@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Viking theme colors from memory -->
+    <color name="background_dark_wood">#2C1810</color>  <!-- Dark wood brown -->
+    <color name="button_light_wood">#B08968</color>    <!-- Light wood brown -->
+    <color name="accent_soft_gold">#DAA520</color>     <!-- Soft gold -->
+    <color name="active_deep_red">#8B0000</color>      <!-- Deep red -->
+    <color name="text_parchment">#F5E6D3</color>       <!-- Parchment -->
+    <color name="text_dark_brown">#2C1810</color>      <!-- Dark brown for text on light backgrounds -->
+    <color name="ic_launcher_background">#2C1810</color> <!-- Dark wood brown for app icon background -->
+
+    <!-- Semi-transparent variants for overlays -->
+    <color name="parchment_alpha_90">#E6F5E6D3</color> <!-- 90% opacity parchment -->
+</resources>

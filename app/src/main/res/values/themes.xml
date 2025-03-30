@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base Viking theme with dark wood brown background -->
+    <style name="Theme.Mjodr" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Primary colors -->
+        <item name="android:colorPrimary">@color/button_light_wood</item>
+        <item name="android:colorPrimaryDark">@color/background_dark_wood</item>
+        <item name="android:colorAccent">@color/accent_soft_gold</item>
+
+        <!-- Window colors -->
+        <item name="android:windowBackground">@color/background_dark_wood</item>
+        <item name="android:statusBarColor">@color/background_dark_wood</item>
+        <item name="android:navigationBarColor">@color/background_dark_wood</item>
+
+        <!-- Text colors -->
+        <item name="android:textColor">@color/text_parchment</item>
+        <item name="android:textColorPrimary">@color/text_parchment</item>
+        <item name="android:textColorSecondary">@color/text_parchment</item>
+
+        <!-- Button styling -->
+        <item name="android:buttonStyle">@style/Widget.Mjodr.Button</item>
+    </style>
+
+    <!-- Viking-themed button style -->
+    <style name="Widget.Mjodr.Button" parent="android:Widget.Material.Button">
+        <item name="android:background">@color/button_light_wood</item>
+        <item name="android:textColor">@color/text_dark_brown</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+</resources>
