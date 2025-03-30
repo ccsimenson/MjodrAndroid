@@ -8,7 +8,8 @@
 - [x] Add input validation with Viking-themed error messages
 - [x] Implement Plato conversion display
 - [x] Add historical context information about Viking brewing methods
-# 2. Recipes (Ancient Recipes)
+
+### 2. Recipes (Ancient Recipes)
 - [x] UI Components and Navigation
 - [x] Implement YouTube API integration for mead recipes
 - [x] Add local storage for favorite recipes
@@ -18,10 +19,10 @@
 
 ### 3. Mead Hall (Batch Management)
 - [x] UI Components and Navigation
-- [ ] Implement local database for batch storage
-- [ ] Create batch tracking functionality (start date, readings, status)
-- [ ] Add measurement tracking with gravity and temperature
-- [ ] Implement batch status updates (primary, secondary, aging, bottled)
+- [x] Implement local database for batch storage
+- [x] Create batch tracking functionality (start date, readings, status)
+- [x] Add measurement tracking with gravity and temperature
+- [x] Implement batch status updates (primary, secondary, aging, bottled)
 - [ ] Add notifications for batch milestones
 - [ ] Implement batch statistics and reporting
 
@@ -34,17 +35,17 @@
 - [ ] Create FAQ section with Viking-themed responses
 
 ## Data Models Implementation
-- [ ] Create MeadBatch data class and repository
-- [ ] Implement GravityMeasurement data class
-- [ ] Create BatchStatus enum with Viking-themed status names
-- [ ] Implement Recipe data class and repository
-- [ ] Create YoutubeVideo data model for recipe integration
+- [x] Create MeadBatch data class and repository
+- [x] Implement GravityMeasurement data class
+- [x] Create BatchStatus enum with Viking-themed status names
+- [x] Implement Recipe data class and repository
+- [x] Create YoutubeVideo data model for recipe integration
 
 ## API Integration
-- [ ] Set up YouTube Data API for recipe search
-- [ ] Implement proper API key management
-- [ ] Add caching for API responses to reduce quota usage
-- [ ] Implement error handling for API failures
+- [x] Set up YouTube Data API for recipe search
+- [x] Implement proper API key management
+- [x] Add caching for API responses to reduce quota usage
+- [x] Implement error handling for API failures
 
 ## Final Steps Before Publishing
 
