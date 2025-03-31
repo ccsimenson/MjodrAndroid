@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application") version "8.9.1"
-    id("org.jetbrains.kotlin.android") version "1.9.20"
+    id("org.jetbrains.kotlin.android") version "1.9.22"
     id("com.google.dagger.hilt.android") version "2.50" apply false
     id("org.jetbrains.kotlin.kapt")
 }

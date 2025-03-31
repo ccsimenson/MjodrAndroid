@@ -46,3 +46,4 @@ venv/
 *.hprof
 *.dump
 *.trace
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
