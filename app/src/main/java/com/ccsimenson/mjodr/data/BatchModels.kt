@@ -14,6 +14,7 @@ enum class BatchStatus {
     AGING,
     BOTTLED,
     COMPLETED,
+    FAILED,
     ARCHIVED
 }
 

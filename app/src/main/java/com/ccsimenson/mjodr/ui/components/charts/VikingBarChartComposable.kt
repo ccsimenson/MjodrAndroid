@@ -1,18 +1,34 @@
-package com.ccsimenson.mjodr.ui.components.charts
+                                                  package com.ccsimenson.mjodr.ui.components.charts
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.viewinterop.AndroidView
 import com.ccsimenson.mjodr.ui.components.charts.VikingBarChart
+import android.graphics.Color
 
 @Composable
 fun VikingBarChartComposable(
     data: List<Double>,
+    title: String,
+    xAxisLabel: String,
+    yAxisLabel: String,
     modifier: Modifier = Modifier
 ) {
-    val chart = VikingBarChart(context = LocalContext.current)
-    chart.setData(data, VikingTheme.colors.lightWood.toArgb())
+    val context = LocalContext.current
+    val chart = VikingBarChart(context)
+    
+    chart.apply {
+        setData(data, Color.parseColor("#FFD700"))
+        setTitle(title)
+        setXAxisLabel(xAxisLabel)
+        setYAxisLabel(yAxisLabel)
+    }
+    
     AndroidView(
         factory = { chart },
         modifier = modifier
-    )
+    ) { view ->
+        view.invalidate()
+    }
 }

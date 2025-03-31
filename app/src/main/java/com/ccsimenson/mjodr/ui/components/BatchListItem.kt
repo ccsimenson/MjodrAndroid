@@ -140,22 +140,20 @@ fun StatusBadge(
         BatchStatus.AGING -> VikingColors.Gold to VikingColors.TextDark
         BatchStatus.BOTTLED -> VikingColors.LightWood.copy(alpha = 0.8f) to VikingColors.TextDark
         BatchStatus.COMPLETED -> VikingColors.DarkWood to VikingColors.Parchment
+        BatchStatus.FAILED -> VikingColors.Red to VikingColors.Parchment
         BatchStatus.ARCHIVED -> VikingColors.TextDark to VikingColors.Parchment
     }
     
     Box(
         modifier = modifier
-            .background(
-                color = backgroundColor,
-                shape = RoundedCornerShape(4.dp)
-            )
+            .background(backgroundColor, RoundedCornerShape(8.dp))
             .padding(horizontal = 8.dp, vertical = 4.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = status.name,
-            style = MaterialTheme.typography.bodySmall,
-            color = textColor
+            text = status.name.replace('_', ' ').lowercase().capitalize(),
+            color = textColor,
+            style = MaterialTheme.typography.bodySmall
         )
     }
 }

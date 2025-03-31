@@ -17,13 +17,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.ccsimenson.mjodr.R
 import com.ccsimenson.mjodr.ui.components.VikingButton
 import com.ccsimenson.mjodr.ui.components.VikingScaffold
 import com.ccsimenson.mjodr.ui.screens.*
 import com.ccsimenson.mjodr.ui.theme.VikingColors
+import com.ccsimenson.mjodr.ui.components.BatchStatisticsScreen
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
@@ -32,7 +35,9 @@ sealed class Screen(val route: String) {
     object MeadHall : Screen("mead_hall")
     object Help : Screen("help")
     object BrewingHistory : Screen("brewing_history")
-    object BatchStatistics : Screen("batch_statistics")
+    object BatchStatistics : Screen("batch_statistics/{batchId}") {
+        fun createRoute(batchId: String) = "batch_statistics/$batchId"
+    }
 }
 
 @Composable
@@ -185,14 +190,14 @@ fun NavGraph(navController: NavHostController) {
         }
         
         composable(
-            route = Screen.BatchStatistics.route + "/{batchId}",
+            route = Screen.BatchStatistics.route,
             arguments = listOf(
                 navArgument("batchId") {
                     type = NavType.StringType
                 }
             )
-        ) {
-            val batchId = it.arguments?.getString("batchId") ?: ""
+        ) { backStackEntry ->
+            val batchId = backStackEntry.arguments?.getString("batchId") ?: ""
             BatchStatisticsScreen(
                 batchId = batchId,
                 onBack = { navController.popBackStack() }

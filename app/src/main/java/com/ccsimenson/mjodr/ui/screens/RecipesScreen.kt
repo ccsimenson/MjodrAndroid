@@ -1,194 +1,103 @@
 package com.ccsimenson.mjodr.ui.screens
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.YouTube
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ccsimenson.mjodr.R
-import com.ccsimenson.mjodr.data.MeadRecipe
+import com.ccsimenson.mjodr.ui.components.*
+import com.ccsimenson.mjodr.ui.components.FilterButton
+import com.ccsimenson.mjodr.ui.components.TraditionalRecipeCard
+import com.ccsimenson.mjodr.ui.viewmodels.TraditionalRecipesViewModel
 import com.ccsimenson.mjodr.data.RecipeDifficulty
 import com.ccsimenson.mjodr.data.RecipeType
-import com.ccsimenson.mjodr.data.YoutubeVideo
-import com.ccsimenson.mjodr.ui.components.*
-import com.ccsimenson.mjodr.ui.theme.VikingColors
-import com.ccsimenson.mjodr.ui.viewmodels.RecipesViewModel
-import com.ccsimenson.mjodr.ui.viewmodels.TraditionalRecipesViewModel
-import com.ccsimenson.mjodr.ui.viewmodels.ViewModelFactory
 
-/**
- * Ancient Recipes screen with both traditional recipes and YouTube recipe search functionality
- * Styled with the Viking theme
-
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipesScreen(
-    onNavigateBack: () -> Unit,
-    recipesViewModel: RecipesViewModel = viewModel(),
-    traditionalViewModel: TraditionalRecipesViewModel = viewModel(
-        factory = remember { 
-            ViewModelFactory(LocalContext.current.applicationContext as android.app.Application) 
-        }
-    )
+    viewModel: TraditionalRecipesViewModel,
+    onRecipeClick: (String) -> Unit
 ) {
-    val context = LocalContext.current
+    val recipes by viewModel.recipes.collectAsState()
+    var searchQuery by remember { mutableStateOf(TextFieldValue()) }
     val keyboardController = LocalSoftwareKeyboardController.current
-    val searchResults by recipesViewModel.searchResults.collectAsState()
-    val traditionalRecipes by traditionalViewModel.recipes.collectAsState()
     
-    var selectedTab by remember { mutableStateOf(0) }
-    var selectedRecipe by remember { mutableStateOf<MeadRecipe?>(null) }
-    
-    // Load default recipes when the screen is first displayed
-    LaunchedEffect(Unit) {
-        recipesViewModel.loadDefaultRecipes()
-        traditionalViewModel.loadAllRecipes()
-    }
-    
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = VikingColors.Background
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
     ) {
-        if (selectedRecipe != null) {
-            // Show recipe detail screen
-            RecipeDetailScreen(
-                recipe = selectedRecipe!!,
-                onBackClick = { selectedRecipe = null },
-                onFavoriteClick = { traditionalViewModel.toggleFavorite(it) },
-                onShareClick = { shareRecipe(it, context) }
+        // Search bar
+        TextField(
+            value = searchQuery,
+            onValueChange = { 
+                searchQuery = it
+                viewModel.updateSearchQuery(it.text)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp),
+            label = { Text("Search recipes") },
+            leadingIcon = {
+                Icon(Icons.Default.Search, contentDescription = "Search")
+            },
+            trailingIcon = {
+                IconButton(onClick = { keyboardController?.hide() }) {
+                    Icon(Icons.Default.FilterList, contentDescription = "Filter")
+                }
+            }
+        )
+
+        // Filters
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            FilterButton(
+                text = "Type",
+                isSelected = viewModel.selectedType != null
+            ) { 
+                viewModel.setTypeFilter(null)
+            }
+            FilterButton(
+                text = "Difficulty",
+                isSelected = viewModel.selectedDifficulty != null
+            ) { 
+                viewModel.setDifficultyFilter(null)
+            }
+            Switch(
+                checked = viewModel.showFavoritesOnly,
+                onCheckedChange = { viewModel.toggleFavoritesOnly() }
             )
-        } else {
-            // Show main recipes screen with tabs
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                // Header
-                Text(
-                    text = stringResource(R.string.ancient_recipes),
-                    style = MaterialTheme.typography.headlineLarge.copy(
-                        fontFamily = FontFamily.Serif,
-                        fontWeight = FontWeight.Bold
-                    ),
-                    color = VikingColors.Gold,
-                    modifier = Modifier.padding(bottom = 16.dp)
+        }
+
+        // Recipe list
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(recipes) { recipe ->
+                TraditionalRecipeCard(
+                    recipe = recipe,
+                    onCardClick = { onRecipeClick(recipe.id) },
+                    onFavoriteClick = { viewModel.toggleFavorite(recipe.id) }
                 )
-                
-                // Tabs
-                TabRow(
-                    selectedTabIndex = selectedTab,
-                    containerColor = VikingColors.DarkWood,
-                    contentColor = VikingColors.Gold,
-                    indicator = { tabPositions ->
-                        TabRowDefaults.Indicator(
-                            modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTab]),
-                            color = VikingColors.Gold
-                        )
-                    }
-                ) {
-                    Tab(
-                        selected = selectedTab == 0,
-                        onClick = { selectedTab = 0 },
-                        text = {
-                            Text(
-                                "Traditional Recipes",
-                                style = MaterialTheme.typography.bodyLarge.copy(
-                                    fontFamily = FontFamily.Serif
-                                )
-                            )
-                        },
-                        selectedContentColor = VikingColors.Gold,
-                        unselectedContentColor = VikingColors.LightWood
-                    )
-                    
-                    Tab(
-                        selected = selectedTab == 1,
-                        onClick = { selectedTab = 1 },
-                        icon = {
-                            Icon(Icons.Default.YouTube, contentDescription = null)
-                        },
-                        text = {
-                            Text(
-                                "YouTube Recipes",
-                                style = MaterialTheme.typography.bodyLarge.copy(
-                                    fontFamily = FontFamily.Serif
-                                )
-                            )
-                        },
-                        selectedContentColor = VikingColors.Gold,
-                        unselectedContentColor = VikingColors.LightWood
-                    )
-                }
-                
-                Spacer(modifier = Modifier.height(8.dp))
-                
-                // Tab content
-                when (selectedTab) {
-                    0 -> {
-                        // Traditional recipes tab
-                        TraditionalRecipesTab(
-                            recipes = traditionalRecipes,
-                            isLoading = traditionalViewModel.isLoading,
-                            searchQuery = traditionalViewModel.searchQuery,
-                            selectedType = traditionalViewModel.selectedType,
-                            selectedDifficulty = traditionalViewModel.selectedDifficulty,
-                            showFavoritesOnly = traditionalViewModel.showFavoritesOnly,
-                            onSearchQueryChange = traditionalViewModel::updateSearchQuery,
-                            onTypeSelected = traditionalViewModel::setTypeFilter,
-                            onDifficultySelected = traditionalViewModel::setDifficultyFilter,
-                            onFavoritesToggled = traditionalViewModel::toggleFavoritesOnly,
-                            onClearFilters = traditionalViewModel::clearFilters,
-                            onRecipeClick = { selectedRecipe = it },
-                            onFavoriteClick = traditionalViewModel::toggleFavorite,
-                            onShareClick = { shareRecipe(it, context) }
-                        )
-                    }
-                    1 -> {
-                        // YouTube recipes tab
-                        YouTubeRecipesTab(
-                            searchResults = searchResults,
-                            isLoading = recipesViewModel.isLoading,
-                            searchQuery = recipesViewModel.searchQuery,
-                            onSearchQueryChange = recipesViewModel::updateSearchQuery,
-                            onSearch = {
-                                recipesViewModel.searchRecipes()
-                                keyboardController?.hide()
-                            },
-                            onVideoClick = { openYoutubeVideo(it, context) }
-                        )
-                    }
-                }
             }
         }
     }
 }
 
-/**
- * Tab content for traditional Viking mead recipes
- */
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun TraditionalRecipesTab(
+fun TraditionalRecipesTab(
     recipes: List<MeadRecipe>,
     isLoading: Boolean,
     searchQuery: String,
@@ -204,99 +113,155 @@ private fun TraditionalRecipesTab(
     onFavoriteClick: (String) -> Unit,
     onShareClick: (MeadRecipe) -> Unit
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-    
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // Search bar
-        OutlinedTextField(
-            value = searchQuery,
-            onValueChange = onSearchQueryChange,
-            label = { Text(stringResource(R.string.search_hint), color = VikingColors.TextLight) },
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = VikingColors.Gold,
-                unfocusedBorderColor = VikingColors.LightWood,
-                focusedLabelColor = VikingColors.Gold,
-                unfocusedLabelColor = VikingColors.LightWood,
-                cursorColor = VikingColors.Gold,
-                focusedTextColor = VikingColors.TextLight,
-                unfocusedTextColor = VikingColors.TextLight
-            ),
+        // Search and filter row
+        Row(
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-            keyboardActions = KeyboardActions(
-                onSearch = {
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            // Search field
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = onSearchQueryChange,
+                label = { Text("Search recipes") },
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                modifier = Modifier.weight(1f),
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                keyboardActions = KeyboardActions(onSearch = { 
                     keyboardController?.hide()
-                }
-            ),
-            singleLine = true,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "Search",
-                    tint = VikingColors.Gold
-                )
-            }
-        )
+                    onSearchQueryChange(searchQuery) // Trigger search when Enter is pressed
+                })
+            )
+            
+            // Type filter
+            FilterButton(
+                selected = selectedType,
+                options = RecipeType.values(),
+                onSelected = onTypeSelected,
+                label = "Type"
+            )
+            
+            // Difficulty filter
+            FilterButton(
+                selected = selectedDifficulty,
+                options = RecipeDifficulty.values(),
+                onSelected = onDifficultySelected,
+                label = "Difficulty"
+            )
+            
+            // Favorites toggle
+            FilterButton(
+                selected = if (showFavoritesOnly) RecipeDifficulty.EASY else null,
+                options = listOf(RecipeDifficulty.EASY),
+                onSelected = { if (it == RecipeDifficulty.EASY) onFavoritesToggled() else onClearFilters() },
+                label = "Favorites"
+            )
+        }
         
-        Spacer(modifier = Modifier.height(8.dp))
-        
-        // Filters
-        RecipeFilters(
-            selectedType = selectedType,
-            selectedDifficulty = selectedDifficulty,
-            showFavoritesOnly = showFavoritesOnly,
-            onTypeSelected = onTypeSelected,
-            onDifficultySelected = onDifficultySelected,
-            onFavoritesToggled = onFavoritesToggled,
-            onClearFilters = onClearFilters
-        )
-        
-        Spacer(modifier = Modifier.height(8.dp))
-        
-        // Loading indicator
-        if (isLoading) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    color = VikingColors.Gold
+        // Recipes list
+        LazyColumn(
+            modifier = Modifier.weight(1f)
+        ) {
+            items(recipes) { recipe ->
+                RecipeCard(
+                    recipe = recipe,
+                    onFavoriteClick = { onFavoriteClick(recipe.id) },
+                    onShareClick = { onShareClick(recipe) },
+                    onClick = { onRecipeClick(recipe) }
                 )
             }
         }
-        
-        // Recipe list
-        if (recipes.isEmpty() && !isLoading) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentAlignment = Alignment.Center
+    }
+}
+
+@Composable
+fun FilterButton(
+    selected: Any?,
+    options: Array<out Any>,
+    onSelected: (Any?) -> Unit,
+    label: String
+) {
+    OutlinedButton(
+        onClick = {
+            val newSelection = if (selected == null) options.first() else null
+            onSelected(newSelection)
+        }
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyLarge.copy(
+                fontFamily = FontFamily.Serif
+            )
+        )
+    }
+}
+
+@Composable
+fun RecipeCard(
+    recipe: MeadRecipe,
+    onFavoriteClick: () -> Unit,
+    onShareClick: () -> Unit,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
+        colors = CardDefaults.cardColors(
+            containerColor = VikingColors.LightWood
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            // Recipe title
+            Text(
+                text = recipe.name,
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontFamily = FontFamily.Serif,
+                    fontWeight = FontWeight.Bold
+                ),
+                color = VikingColors.Gold
+            )
+            
+            // Recipe details
+            Text(
+                text = "${recipe.type} • ${recipe.difficulty} • ${recipe.preparationTime}h",
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontFamily = FontFamily.Serif
+                ),
+                color = VikingColors.DarkWood
+            )
+            
+            // Actions row
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Text(
-                    text = stringResource(R.string.no_recipes),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = VikingColors.TextLight
-                )
-            }
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(recipes) { recipe ->
-                    TraditionalRecipeCard(
-                        recipe = recipe,
-                        onRecipeClick = onRecipeClick,
-                        onFavoriteClick = onFavoriteClick,
-                        onShareClick = onShareClick,
-                        modifier = Modifier.fillMaxWidth()
+                // Favorite button
+                IconButton(
+                    onClick = onFavoriteClick,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Icon(
+                        imageVector = if (recipe.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = "Favorite",
+                        tint = if (recipe.isFavorite) VikingColors.Gold else VikingColors.DarkWood
+                    )
+                }
+                
+                // Share button
+                IconButton(
+                    onClick = onShareClick,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Share,
+                        contentDescription = "Share",
+                        tint = VikingColors.DarkWood
                     )
                 }
             }
@@ -304,149 +269,142 @@ private fun TraditionalRecipesTab(
     }
 }
 
-/**
- * Tab content for YouTube mead recipes
- */
 @Composable
-private fun YouTubeRecipesTab(
-    searchResults: List<YoutubeVideo>,
-    isLoading: Boolean,
-    searchQuery: String,
-    onSearchQueryChange: (String) -> Unit,
-    onSearch: () -> Unit,
-    onVideoClick: (YoutubeVideo) -> Unit
+fun RecipeDetailScreen(
+    recipe: MeadRecipe,
+    onBackClick: () -> Unit,
+    onFavoriteClick: (String) -> Unit,
+    onShareClick: (MeadRecipe) -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // Search bar
-        OutlinedTextField(
-            value = searchQuery,
-            onValueChange = onSearchQueryChange,
-            label = { Text(stringResource(R.string.search_hint), color = VikingColors.TextLight) },
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = VikingColors.Gold,
-                unfocusedBorderColor = VikingColors.LightWood,
-                focusedLabelColor = VikingColors.Gold,
-                unfocusedLabelColor = VikingColors.LightWood,
-                cursorColor = VikingColors.Gold,
-                focusedTextColor = VikingColors.TextLight,
-                unfocusedTextColor = VikingColors.TextLight
-            ),
+        // Header
+        Row(
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-            keyboardActions = KeyboardActions(
-                onSearch = { onSearch() }
-            ),
-            singleLine = true,
-            leadingIcon = {
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Back button
+            IconButton(
+                onClick = onBackClick
+            ) {
                 Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "Search",
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
                     tint = VikingColors.Gold
                 )
             }
-        )
-        
-        Spacer(modifier = Modifier.height(8.dp))
-        
-        // Search button
-        VikingButton(
-            text = stringResource(R.string.search),
-            onClick = onSearch,
-            modifier = Modifier.fillMaxWidth()
-        )
-        
-        Spacer(modifier = Modifier.height(16.dp))
-        
-        // Loading indicator
-        if (isLoading) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                contentAlignment = Alignment.Center
+            
+            // Recipe name
+            Text(
+                text = recipe.name,
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontFamily = FontFamily.Serif,
+                    fontWeight = FontWeight.Bold
+                ),
+                color = VikingColors.Gold
+            )
+            
+            // Favorite button
+            IconButton(
+                onClick = { onFavoriteClick(recipe.id) }
             ) {
-                CircularProgressIndicator(
-                    color = VikingColors.Gold
+                Icon(
+                    imageVector = if (recipe.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                    contentDescription = "Favorite",
+                    tint = if (recipe.isFavorite) VikingColors.Gold else VikingColors.DarkWood
                 )
             }
         }
         
-        // Results
-        if (searchResults.isEmpty() && !isLoading) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentAlignment = Alignment.Center
-            ) {
+        // Recipe details
+        LazyColumn(
+            modifier = Modifier.weight(1f)
+        ) {
+            item {
+                // Description
                 Text(
-                    text = stringResource(R.string.no_recipes),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = VikingColors.TextLight
+                    text = recipe.description,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        fontFamily = FontFamily.Serif
+                    ),
+                    color = VikingColors.DarkWood
                 )
-            }
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(searchResults) { video ->
-                    RecipeVideoItem(
-                        video = video,
-                        onClick = onVideoClick,
-                        modifier = Modifier.fillMaxWidth()
+                
+                // Ingredients
+                Text(
+                    text = "Ingredients:",
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontFamily = FontFamily.Serif,
+                        fontWeight = FontWeight.Bold
+                    ),
+                    color = VikingColors.Gold,
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
+                
+                recipe.ingredients.forEach { ingredient ->
+                    Text(
+                        text = "• ${ingredient.amount} ${ingredient.unit} ${ingredient.name}",
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            fontFamily = FontFamily.Serif
+                        ),
+                        color = VikingColors.DarkWood
+                    )
+                }
+                
+                // Instructions
+                Text(
+                    text = "Instructions:",
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontFamily = FontFamily.Serif,
+                        fontWeight = FontWeight.Bold
+                    ),
+                    color = VikingColors.Gold,
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
+                
+                recipe.instructions.forEach { step ->
+                    Text(
+                        text = "${step.number}. ${step.description}",
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            fontFamily = FontFamily.Serif
+                        ),
+                        color = VikingColors.DarkWood
                     )
                 }
             }
         }
+        
+        // Share button
+        Button(
+            onClick = { onShareClick(recipe) },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = VikingColors.Gold,
+                contentColor = VikingColors.DarkWood
+            )
+        ) {
+            Text(
+                text = "Share Recipe",
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontFamily = FontFamily.Serif,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        }
     }
 }
 
-/**
- * Opens a YouTube video in the YouTube app or browser
- */
-private fun openYoutubeVideo(video: YoutubeVideo, context: android.content.Context) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(video.videoUrl))
-    context.startActivity(intent)
-}
-
-/**
- * Shares a recipe via Android's share functionality
- */
-private fun shareRecipe(recipe: MeadRecipe, context: android.content.Context) {
-    val shareText = buildString {
-        append("${recipe.title} - Traditional Viking Mead Recipe\n\n")
-        append("${recipe.description}\n\n")
-        
-        append("INGREDIENTS:\n")
-        recipe.ingredients.forEach { ingredient ->
-            append("• $ingredient\n")
-        }
-        append("\n")
-        
-        append("INSTRUCTIONS:\n")
-        recipe.instructions.forEachIndexed { index, instruction ->
-            append("${index + 1}. $instruction\n")
-        }
-        append("\n")
-        
-        append("Difficulty: ${recipe.difficulty.name.lowercase().replaceFirstChar { it.uppercase() }}\n")
-        append("Fermentation Time: ${recipe.fermentationTime}\n")
-        append("Yield: ${recipe.yield}\n\n")
-        
-        append("Shared from the Mjöðr Calculator App")
-    }
-    
-    val sendIntent = Intent().apply {
-        action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, shareText)
+fun shareRecipe(recipe: MeadRecipe, context: android.content.Context) {
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
+        putExtra(Intent.EXTRA_SUBJECT, recipe.name)
+        putExtra(Intent.EXTRA_TEXT, "${recipe.name}\n${recipe.description}")
     }
     
-    val shareIntent = Intent.createChooser(sendIntent, "Share Recipe")
-    context.startActivity(shareIntent)
+    context.startActivity(
+        Intent.createChooser(shareIntent, "Share recipe")
+    )
 }

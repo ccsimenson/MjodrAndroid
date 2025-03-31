@@ -17,157 +17,135 @@ class MeadRecipeRepository {
             // Traditional Basic Mead (Skald's First Song)
             MeadRecipe(
                 id = "traditional_basic",
-                title = "Skald's First Song",
+                name = "Skald's First Song",
                 description = "A simple traditional mead as would have been made in Viking households. The clean honey flavor allows the quality of the honey to shine through.",
                 ingredients = listOf(
-                    "4 pounds (1.8 kg) raw honey",
-                    "1 gallon (3.8 liters) spring water",
-                    "1 packet mead yeast or wine yeast",
-                    "1 teaspoon yeast nutrient"
+                    Ingredient("honey", "4 pounds", "(1.8 kg) raw honey"),
+                    Ingredient("water", "1 gallon", "(3.8 liters) spring water"),
+                    Ingredient("yeast", "1 packet", "mead yeast or wine yeast"),
+                    Ingredient("nutrient", "1 teaspoon", "yeast nutrient")
                 ),
                 instructions = listOf(
-                    "Heat 1/2 gallon of water to about 110°F (43°C).",
-                    "Stir in the honey until completely dissolved.",
-                    "Add the remaining water to bring the temperature down.",
-                    "When cooled to room temperature, add the yeast and nutrient.",
-                    "Transfer to a fermentation vessel and attach airlock.",
-                    "Ferment for 2-3 weeks, then rack to secondary.",
-                    "Age for at least 3 months before drinking."
+                    Instruction(1, "Heat 1/2 gallon of water to about 110°F (43°C)."),
+                    Instruction(2, "Stir in the honey until completely dissolved."),
+                    Instruction(3, "Add the remaining water to bring the temperature down."),
+                    Instruction(4, "Add yeast and yeast nutrient."),
+                    Instruction(5, "Transfer to fermenting vessel and attach airlock."),
+                    Instruction(6, "Ferment at room temperature for 2-3 weeks."),
+                    Instruction(7, "Rack (transfer) to a clean vessel to remove sediment."),
+                    Instruction(8, "Age for 3-6 months before bottling."),
+                    Instruction(9, "Bottle and allow to age for at least 6 months before drinking.")
                 ),
                 type = RecipeType.TRADITIONAL,
                 difficulty = RecipeDifficulty.BEGINNER,
-                fermentationTime = "3-6 months",
-                yield = "1 gallon (about 5 bottles)",
-                youtubeVideoId = "2YwkvA9QMjE"
+                preparationTime = "2-3 weeks",
+                isFavorite = false
             ),
             
-            // Spiced Metheglin (Odin's Wisdom)
+            // Spiced Mead (Winter's Warmth)
             MeadRecipe(
-                id = "spiced_metheglin",
-                title = "Odin's Wisdom",
-                description = "A traditional spiced mead (metheglin) with herbs and spices that Vikings would have had access to through trade routes. Named after the All-Father who sacrificed himself for wisdom.",
+                id = "spiced_mead",
+                name = "Winter's Warmth",
+                description = "A warming spiced mead perfect for cold nights. The spices enhance the honey's natural sweetness and add complexity to the flavor profile.",
                 ingredients = listOf(
-                    "5 pounds (2.3 kg) wildflower honey",
-                    "1 gallon (3.8 liters) spring water",
-                    "1 stick cinnamon",
-                    "5 whole cloves",
-                    "1 star anise",
-                    "1 small piece ginger, sliced",
-                    "Zest of 1 orange",
-                    "1 packet mead yeast",
-                    "2 teaspoons yeast nutrient"
+                    Ingredient("honey", "4 pounds", "(1.8 kg) raw honey"),
+                    Ingredient("water", "1 gallon", "(3.8 liters) spring water"),
+                    Ingredient("yeast", "1 packet", "mead yeast"),
+                    Ingredient("nutrient", "1 teaspoon", "yeast nutrient"),
+                    Ingredient("cinnamon", "2 sticks", ""),
+                    Ingredient("cloves", "10", ""),
+                    Ingredient("ginger", "1 inch", "fresh, grated"),
+                    Ingredient("cardamom", "5 pods", ""),
+                    Ingredient("orange peel", "1", "fresh"),
+                    Ingredient("nutmeg", "1/4 teaspoon", "ground")
                 ),
                 instructions = listOf(
-                    "Heat 1/2 gallon of water to about 160°F (71°C).",
-                    "Add all spices and simmer for 10 minutes.",
-                    "Remove from heat and stir in honey until dissolved.",
-                    "Add remaining water to cool the mixture.",
-                    "When cooled to room temperature, strain out spices.",
-                    "Add yeast and nutrient, then transfer to fermentation vessel.",
-                    "Attach airlock and ferment for 2-3 weeks.",
-                    "Rack to secondary and age for 6-12 months."
+                    Instruction(1, "Heat 1/2 gallon of water to about 110°F (43°C)."),
+                    Instruction(2, "Stir in the honey until completely dissolved."),
+                    Instruction(3, "Add spices and let steep for 15 minutes."),
+                    Instruction(4, "Add remaining water and strain out spices."),
+                    Instruction(5, "Add yeast and yeast nutrient."),
+                    Instruction(6, "Transfer to fermenting vessel and attach airlock."),
+                    Instruction(7, "Ferment at room temperature for 3-4 weeks."),
+                    Instruction(8, "Rack to remove sediment."),
+                    Instruction(9, "Age for 4-8 months before bottling."),
+                    Instruction(10, "Bottle and allow to age for at least 6 months before drinking.")
                 ),
-                type = RecipeType.METHEGLIN,
+                type = RecipeType.SPICED,
                 difficulty = RecipeDifficulty.INTERMEDIATE,
-                fermentationTime = "6-12 months",
-                yield = "1 gallon (about 5 bottles)",
-                youtubeVideoId = "PgadPmNfkdU"
+                preparationTime = "3-4 weeks",
+                isFavorite = false
             ),
             
-            // Berry Melomel (Freyja's Tears)
+            // Fruit Mead (Berserker's Berries)
             MeadRecipe(
-                id = "berry_melomel",
-                title = "Freyja's Tears",
-                description = "A fruit mead made with berries that would have been gathered in Scandinavian forests. Named after the goddess Freyja, whose tears turned to gold.",
+                id = "fruit_mead",
+                name = "Berserker's Berries",
+                description = "A robust fruit mead made with wild berries, perfect for celebrating victories. The berries add a deep, complex flavor to the honey base.",
                 ingredients = listOf(
-                    "3 pounds (1.4 kg) wildflower honey",
-                    "1 gallon (3.8 liters) spring water",
-                    "2 pounds (0.9 kg) mixed berries (blueberries, lingonberries, raspberries)",
-                    "1 packet mead yeast",
-                    "2 teaspoons yeast nutrient",
-                    "1 teaspoon acid blend"
+                    Ingredient("honey", "4 pounds", "(1.8 kg) raw honey"),
+                    Ingredient("water", "1 gallon", "(3.8 liters) spring water"),
+                    Ingredient("yeast", "1 packet", "mead yeast"),
+                    Ingredient("nutrient", "1 teaspoon", "yeast nutrient"),
+                    Ingredient("cranberries", "1 pound", "fresh or frozen"),
+                    Ingredient("blueberries", "1/2 pound", "fresh or frozen"),
+                    Ingredient("blackberries", "1/2 pound", "fresh or frozen"),
+                    Ingredient("raspberries", "1/2 pound", "fresh or frozen"),
+                    Ingredient("lemon", "1", "juice and zest")
                 ),
                 instructions = listOf(
-                    "Sanitize all equipment thoroughly.",
-                    "Heat 1/2 gallon of water to about 110°F (43°C).",
-                    "Stir in the honey until completely dissolved.",
-                    "Mash berries in a sanitized nylon bag.",
-                    "Add berries in bag to primary fermentation vessel.",
-                    "Add honey water, remaining water, and other ingredients.",
-                    "Stir vigorously to aerate, then add yeast.",
-                    "Ferment for 1-2 weeks with fruit, then remove fruit.",
-                    "Continue fermentation for another 2-3 weeks.",
-                    "Rack to secondary and age for at least 3 months."
+                    Instruction(1, "Heat 1/2 gallon of water to about 110°F (43°C)."),
+                    Instruction(2, "Stir in the honey until completely dissolved."),
+                    Instruction(3, "Add remaining water and bring to a boil."),
+                    Instruction(4, "Add fruits and simmer for 15 minutes."),
+                    Instruction(5, "Strain out fruits and cool to 70°F (21°C)."),
+                    Instruction(6, "Add yeast and yeast nutrient."),
+                    Instruction(7, "Transfer to fermenting vessel and attach airlock."),
+                    Instruction(8, "Ferment at room temperature for 4-5 weeks."),
+                    Instruction(9, "Rack to remove sediment."),
+                    Instruction(10, "Age for 6-12 months before bottling."),
+                    Instruction(11, "Bottle and allow to age for at least 6 months before drinking.")
                 ),
-                type = RecipeType.MELOMEL,
-                difficulty = RecipeDifficulty.INTERMEDIATE,
-                fermentationTime = "4-8 months",
-                yield = "1 gallon (about 5 bottles)",
-                youtubeVideoId = "k0vHUFGNC0s"
-            ),
-            
-            // Braggot (Thor's Hammer)
-            MeadRecipe(
-                id = "braggot",
-                title = "Thor's Hammer",
-                description = "A powerful braggot combining honey and malted barley, similar to what Vikings would have brewed for celebrations and feasts. Named after Thor's mighty hammer, Mjölnir.",
-                ingredients = listOf(
-                    "3 pounds (1.4 kg) raw honey",
-                    "2 pounds (0.9 kg) light malt extract",
-                    "1 gallon (3.8 liters) spring water",
-                    "1 ounce (28g) hops (traditional varieties)",
-                    "1 packet ale yeast",
-                    "1 teaspoon yeast nutrient"
-                ),
-                instructions = listOf(
-                    "Heat water to about 160°F (71°C).",
-                    "Add malt extract and stir until dissolved.",
-                    "Add honey and stir until dissolved.",
-                    "Add hops and boil for 60 minutes.",
-                    "Cool wort to room temperature.",
-                    "Transfer to fermentation vessel, leaving sediment behind.",
-                    "Add yeast and nutrient.",
-                    "Ferment for 2-3 weeks.",
-                    "Rack to secondary and age for 1-2 months.",
-                    "Bottle with priming sugar for carbonation."
-                ),
-                type = RecipeType.BRAGGOT,
+                type = RecipeType.FRUIT,
                 difficulty = RecipeDifficulty.ADVANCED,
-                fermentationTime = "2-3 months",
-                yield = "1 gallon (about 10 bottles)",
-                youtubeVideoId = "3tpXzD8jXO0"
+                preparationTime = "4-5 weeks",
+                isFavorite = false
             ),
             
-            // Herbal Mead (Eir's Remedy)
+            // Herbal Mead (Healer's Elixir)
             MeadRecipe(
                 id = "herbal_mead",
-                title = "Eir's Remedy",
-                description = "A healing herbal mead inspired by Viking medicinal traditions. Named after Eir, the goddess of healing in Norse mythology.",
+                name = "Healer's Elixir",
+                description = "A medicinal mead infused with healing herbs, perfect for both health and celebration. The herbs add a subtle, complex flavor profile.",
                 ingredients = listOf(
-                    "3 pounds (1.4 kg) raw honey",
-                    "1 gallon (3.8 liters) spring water",
-                    "1 handful fresh thyme",
-                    "1 handful fresh mint",
-                    "1 small piece ginger, sliced",
-                    "1 teaspoon dried yarrow",
-                    "1 packet mead yeast",
-                    "1 teaspoon yeast nutrient"
+                    Ingredient("honey", "4 pounds", "(1.8 kg) raw honey"),
+                    Ingredient("water", "1 gallon", "(3.8 liters) spring water"),
+                    Ingredient("yeast", "1 packet", "mead yeast"),
+                    Ingredient("nutrient", "1 teaspoon", "yeast nutrient"),
+                    Ingredient("chamomile", "1/4 cup", "dried flowers"),
+                    Ingredient("lavender", "1/4 cup", "dried flowers"),
+                    Ingredient("lemon balm", "1/4 cup", "dried leaves"),
+                    Ingredient("rosemary", "1 tablespoon", "dried"),
+                    Ingredient("thyme", "1 tablespoon", "dried"),
+                    Ingredient("ginger", "1 inch", "fresh, grated")
                 ),
                 instructions = listOf(
-                    "Heat 1/2 gallon of water to about 160°F (71°C).",
-                    "Add herbs and simmer for 10 minutes.",
-                    "Remove from heat and stir in honey until dissolved.",
-                    "Add remaining water to cool the mixture.",
-                    "When cooled to room temperature, strain out herbs.",
-                    "Add yeast and nutrient, then transfer to fermentation vessel.",
-                    "Attach airlock and ferment for 2-3 weeks.",
-                    "Rack to secondary and age for 3-6 months."
+                    Instruction(1, "Heat 1/2 gallon of water to about 110°F (43°C)."),
+                    Instruction(2, "Stir in the honey until completely dissolved."),
+                    Instruction(3, "Add remaining water and herbs."),
+                    Instruction(4, "Let steep for 30 minutes."),
+                    Instruction(5, "Strain out herbs."),
+                    Instruction(6, "Add yeast and yeast nutrient."),
+                    Instruction(7, "Transfer to fermenting vessel and attach airlock."),
+                    Instruction(8, "Ferment at room temperature for 3-4 weeks."),
+                    Instruction(9, "Rack to remove sediment."),
+                    Instruction(10, "Age for 6-12 months before bottling."),
+                    Instruction(11, "Bottle and allow to age for at least 6 months before drinking.")
                 ),
                 type = RecipeType.HERBAL,
-                difficulty = RecipeDifficulty.INTERMEDIATE,
-                fermentationTime = "3-6 months",
-                yield = "1 gallon (about 5 bottles)",
-                youtubeVideoId = "9RL_xXMwuDE"
+                difficulty = RecipeDifficulty.ADVANCED,
+                preparationTime = "3-4 weeks",
+                isFavorite = false
             )
         )
     }
@@ -194,9 +172,9 @@ class MeadRecipeRepository {
         
         val lowercaseQuery = query.lowercase()
         return recipes.filter {
-            it.title.lowercase().contains(lowercaseQuery) ||
+            it.name.lowercase().contains(lowercaseQuery) ||
             it.description.lowercase().contains(lowercaseQuery) ||
-            it.ingredients.any { ingredient -> ingredient.lowercase().contains(lowercaseQuery) } ||
+            it.ingredients.any { ingredient -> ingredient.name.lowercase().contains(lowercaseQuery) } ||
             it.type.name.lowercase().contains(lowercaseQuery)
         }
     }

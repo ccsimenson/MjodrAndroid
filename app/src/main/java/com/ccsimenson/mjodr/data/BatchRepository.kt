@@ -105,6 +105,8 @@ class BatchRepository(context: Context) {
      */
     fun updateBatchStatus(batchId: String, newStatus: BatchStatus) {
         val batch = getBatch(batchId) ?: return
+        
+        // Update batch status
         val updatedBatch = batch.copy(status = newStatus)
         updateBatch(updatedBatch)
         
@@ -143,9 +145,16 @@ class BatchRepository(context: Context) {
         )
     }
     
+    /**
+     * Calculate ABV from original and current gravity
+     */
+    private fun calculateAbv(originalGravity: Double, currentGravity: Double): Double {
+        return ((originalGravity - currentGravity) / 0.001) * 1.31
+    }
+    
     private fun calculateAbvTrend(batch: MeadBatch): List<Double> {
         return batch.measurements.map { measurement ->
-            batch.calculateAbv(batch.originalGravity, measurement.gravity)
+            calculateAbv(batch.originalGravity, measurement.gravity)
         }
     }
     

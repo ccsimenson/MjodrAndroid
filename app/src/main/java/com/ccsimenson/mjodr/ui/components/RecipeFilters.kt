@@ -19,13 +19,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import com.ccsimenson.mjodr.data.RecipeDifficulty
 import com.ccsimenson.mjodr.data.RecipeType
 import com.ccsimenson.mjodr.ui.theme.VikingColors
 
-/**
- * Component for filtering recipes by type, difficulty, and favorites
- */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeFilters(
     selectedType: RecipeType?,
@@ -171,7 +174,7 @@ fun RecipeFilters(
                         }
                     )
                     
-                    // Add all difficulty levels
+                    // Add all difficulties
                     RecipeDifficulty.values().forEach { difficulty ->
                         DropdownMenuItem(
                             text = {

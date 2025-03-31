@@ -6,16 +6,26 @@ package com.ccsimenson.mjodr.data
  */
 data class MeadRecipe(
     val id: String,
-    val title: String,
+    val name: String,
     val description: String,
-    val ingredients: List<String>,
-    val instructions: List<String>,
+    val ingredients: List<Ingredient>,
+    val instructions: List<Instruction>,
     val type: RecipeType,
     val difficulty: RecipeDifficulty,
-    val fermentationTime: String,
-    val yield: String,
+    val preparationTime: String,
     var isFavorite: Boolean = false,
     val youtubeVideoId: String? = null
+)
+
+data class Ingredient(
+    val name: String,
+    val amount: String,
+    val unit: String
+)
+
+data class Instruction(
+    val number: Int,
+    val description: String
 )
 
 /**

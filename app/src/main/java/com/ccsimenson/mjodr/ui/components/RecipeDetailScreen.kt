@@ -49,7 +49,7 @@ fun RecipeDetailScreen(
         CenterAlignedTopAppBar(
             title = {
                 Text(
-                    text = recipe.title,
+                    text = recipe.name,
                     style = MaterialTheme.typography.titleLarge.copy(
                         fontFamily = FontFamily.Serif
                     ),
@@ -128,13 +128,6 @@ fun RecipeDetailScreen(
                 }
                 
                 Spacer(modifier = Modifier.weight(1f))
-                
-                // Yield
-                Text(
-                    text = "Yield: ${recipe.yield}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = VikingColors.TextLight
-                )
             }
             
             Spacer(modifier = Modifier.height(16.dp))
@@ -245,26 +238,6 @@ fun RecipeDetailScreen(
                         }
                     }
                 }
-            }
-            
-            Spacer(modifier = Modifier.height(24.dp))
-            
-            // Fermentation time
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Timer,
-                    contentDescription = null,
-                    tint = VikingColors.Gold
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "Fermentation Time: ${recipe.fermentationTime}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = VikingColors.TextLight
-                )
             }
             
             Spacer(modifier = Modifier.height(24.dp))

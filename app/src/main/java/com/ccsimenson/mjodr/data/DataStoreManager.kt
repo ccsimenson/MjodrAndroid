@@ -3,40 +3,36 @@ package com.ccsimenson.mjodr.data
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
+private val FAVORITE_RECIPES_KEY = stringPreferencesKey("favorite_recipes")
+
 /**
- * DataStore manager for storing user preferences
- * Used for storing favorite recipes in the Ancient Recipes feature
+ * Manager for handling data store operations
  */
 class DataStoreManager(private val context: Context) {
     
-    companion object {
-        private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "mjodr_preferences")
-        
-        // Preference keys
-        private fun favoriteRecipeKey(recipeId: String) = booleanPreferencesKey("favorite_recipe_$recipeId")
-    }
-    
     /**
-     * Get the favorite status of a recipe
+     * Get the list of favorite recipe IDs
      */
-    fun getFavoriteStatus(recipeId: String): Flow<Boolean> {
+    fun getFavoriteRecipes(): Flow<List<String>> {
         return context.dataStore.data.map { preferences ->
-            preferences[favoriteRecipeKey(recipeId)] ?: false
+            preferences[FAVORITE_RECIPES_KEY]?.split(',')?.filter { it.isNotBlank() } ?: emptyList()
         }
     }
     
     /**
-     * Toggle the favorite status of a recipe
+     * Save the list of favorite recipe IDs
      */
-    suspend fun toggleFavoriteStatus(recipeId: String, isFavorite: Boolean) {
+    suspend fun saveFavoriteRecipes(recipes: List<String>) {
         context.dataStore.edit { preferences ->
-            preferences[favoriteRecipeKey(recipeId)] = isFavorite
+            preferences[FAVORITE_RECIPES_KEY] = recipes.joinToString(",")
         }
     }
 }
