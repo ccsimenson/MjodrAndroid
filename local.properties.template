@@ -1,0 +1,30 @@
+# Android SDK location
+sdk.dir=C:\Users\%USERNAME%\AppData\Local\Android\Sdk
+
+# Android NDK location (if needed)
+# ndk.dir=C:\Users\%USERNAME%\AppData\Local\Android\Sdk\ndk
+
+# Local development settings
+# These values will be used in your app's build configuration
+
+# YouTube API Key (if needed)
+# YOUTUBE_API_KEY=your_youtube_api_key
+
+# Debug settings
+# DEBUG_MODE=true
+
+# Local server settings (if needed)
+# LOCAL_SERVER_URL=http://localhost:8080
+
+# Database settings (if needed)
+# DATABASE_URL=jdbc:sqlite:app/database/local.db
+
+# Custom build settings
+# CUSTOM_BUILD_TYPE=debug
+
+# Version settings
+# VERSION_NAME_SUFFIX=-dev
+
+# Feature flags
+# ENABLE_DEBUG_LOGS=true
+# ENABLE_ANALYTICS=false

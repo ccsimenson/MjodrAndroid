@@ -1,0 +1,48 @@
+# Android
+.gradle/
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Build files
+build/
+app/build/
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Keystore
+app/keystore.properties
+
+# Environment
+local.properties
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Virtual Environment
+venv/
+.env/
+
+# Debug files
+*.hprof
+*.dump
+*.trace

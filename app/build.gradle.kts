@@ -1,9 +1,11 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    id("com.android.application") version "8.9.0"
+    id("org.jetbrains.kotlin.android") version "1.9.20"
     id("com.google.dagger.hilt.android") version "2.50" apply false
     id("org.jetbrains.kotlin.kapt")
 }
+
+import java.util.Properties
 
 android {
     namespace = "com.ccsimenson.mjodr"
@@ -19,13 +21,28 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            val properties = Properties()
+            val keystorePropertiesFile = rootProject.file("app/keystore.properties")
+            if (keystorePropertiesFile.exists()) {
+                keystorePropertiesFile.reader().use { properties.load(it) }
+            }
+            storeFile = file(properties.getProperty("storeFile", "app/release-key.jks"))
+            storePassword = properties.getProperty("storePassword")
+            keyAlias = properties.getProperty("keyAlias")
+            keyPassword = properties.getProperty("keyPassword")
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     
@@ -89,9 +106,11 @@ dependencies {
     // Material Icons
     implementation("androidx.compose.material:material-icons-extended")
     
+    // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.01.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
