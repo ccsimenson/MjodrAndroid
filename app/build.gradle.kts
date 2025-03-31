@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.application") version "8.9.0"
+    id("com.android.application") version "8.9.1"
     id("org.jetbrains.kotlin.android") version "1.9.20"
     id("com.google.dagger.hilt.android") version "2.50" apply false
     id("org.jetbrains.kotlin.kapt")
@@ -53,6 +53,13 @@ android {
     
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += listOf(
+            "-Xopt-in=kotlin.RequiresOptIn",
+            "-Xopt-in=kotlin.Experimental",
+            "-Xopt-in=kotlin.RequiresApi",
+            "-Xopt-in=kotlin.DeprecatedSinceKotlin",
+            "-Xlint:-deprecation"
+        )
     }
     
     buildFeatures {
