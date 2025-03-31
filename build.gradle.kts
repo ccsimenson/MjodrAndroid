@@ -16,6 +16,14 @@ buildscript {
     }
 }
 
+allprojects {
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs += "-Xlint:-deprecation"
+        }
+    }
+}
+
 tasks {
     register("clean", Delete::class) {
         delete(layout.buildDirectory)
