@@ -106,11 +106,12 @@ dependencies {
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     
-    // MPAndroidChart
-    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    
     // Material Icons
     implementation("androidx.compose.material:material-icons-extended")
+    
+    // Charting
+    implementation("androidx.compose.foundation:compose-foundation:1.5.4")
+    implementation("androidx.compose.material:material:1.5.4")
     
     // Testing
     testImplementation("junit:junit:4.13.2")
