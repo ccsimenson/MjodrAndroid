@@ -110,8 +110,8 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
     
     // Charting
-    implementation("androidx.compose.foundation:compose-foundation:1.5.4")
-    implementation("androidx.compose.material:material:1.5.4")
+    implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.compose.material:material")
     
     // Testing
     testImplementation("junit:junit:4.13.2")
