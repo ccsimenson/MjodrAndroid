@@ -70,7 +70,7 @@ android {
     }
     
     ksp {
-        useBuildCache = true
+        useBuildCache = false
         correctErrorTypes = true
         arguments {
             arg("room.schemaLocation", "$projectDir/schemas")
