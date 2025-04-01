@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android") version "2.50"
+    id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.ksp")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.devtools.ksp")
