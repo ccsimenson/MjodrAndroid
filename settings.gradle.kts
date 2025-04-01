@@ -1,21 +1,16 @@
 pluginManagement {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url = uri("https://jitpack.io") }
-        gradlePluginPortal()
+        repositories {
+            google()
+            mavenCentral()
+            gradlePluginPortal()
+        }
     }
-}
-
-
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-        maven { url = uri("https://jitpack.io") }
+    dependencyResolutionManagement {
+        repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+        repositories {
+            google()
+            mavenCentral()
+        }
     }
-}
-
-rootProject.name = "Mjöðr"
-include(":app")
+    rootProject.name = "MjodrAndroid"
+    include(":app")
