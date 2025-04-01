@@ -70,6 +70,9 @@ android {
         arguments {
             arg("room.schemaLocation", "$projectDir/schemas")
         }
+        javacOptions {
+            option("-Xmaxerrs", "1000")
+        }
     }
 }
 
