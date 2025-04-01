@@ -50,10 +50,15 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        isCoreLibraryDesugaringEnabled = true
     }
     
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += listOf(
+            "-Xopt-in=kotlin.RequiresOptIn",
+            "-Xjvm-default=all"
+        )
     }
     
     buildFeatures {
@@ -72,6 +77,13 @@ android {
         }
         javacOptions {
             option("-Xmaxerrs", "1000")
+            option("--add-exports", "jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED")
+            option("--add-exports", "jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED")
+            option("--add-exports", "jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
+            option("--add-exports", "jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED")
+            option("--add-exports", "jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED")
+            option("--add-exports", "jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED")
+            option("--add-exports", "jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
         }
     }
 }
@@ -121,4 +133,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    
+    // Core library desugaring
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 }
