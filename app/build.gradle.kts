@@ -5,6 +5,8 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
 }
 
+import java.util.Properties
+
 android {
     namespace = "com.ccsimenson.mjodr"
     compileSdk = 34
